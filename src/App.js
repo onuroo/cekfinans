@@ -24,6 +24,9 @@ import ForgotScreen from './screen/Auth/forgot';
 import HomeScreen from './screen/Home';
 import SettingsScreen from './screen/Settings';
 import CheckScreen from './screen/Check';
+import ListScreen from './screen/List';
+import ListDetailScreen from './screen/ListDetail';
+import FirmSettingsScreen from './screen/FirmSettings';
 import Tabs from './components/Tab'
 import {navigationRef} from "./config/navigator";
 import CheckAddScreen from "./screen/CheckAdd";
@@ -51,6 +54,9 @@ const App = () => {
 						<Stack.Screen name="home" component={TabScreen}/>
 						<Stack.Screen name="checkAdd" component={CheckAddScreen}/>
 						<Stack.Screen name="checkForm" component={CheckForm}/>
+						<Stack.Screen name="list" component={ListScreen}/>
+						<Stack.Screen name="listDetail" component={ListDetailScreen}/>
+						<Stack.Screen name="firmSettings" component={FirmSettingsScreen}/>
 					</Stack.Navigator>
 				</NavigationContainer>
 			</ThemeProvider>

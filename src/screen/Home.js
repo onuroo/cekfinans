@@ -12,12 +12,12 @@ const HomeScreen = () => {
 			<View style={{flex: 1}}>
 				<LinearGradient colors={[color.gradientStart, color.gradientStart, color.gradientEnd]}
 				                style={styles.linearGradient}>
-					<UserComponent name={"Serdal AKDOOĞAN"} image={require('../assets/cek-icon.fw.png')} />
+					<UserComponent name={"Serdal AKDOOĞAN"} image={require('../assets/cek-icon.fw.png')}/>
 				</LinearGradient>
 			</View>
 			<View style={{flex: 0.5, padding: 30}}>
 				<View style={styles.bottomArea}>
-					<TouchableOpacity>
+					<TouchableOpacity onPress={() => navigate('list')}>
 						<View style={[styles.ButtonArea, {borderBottomWidth: 4, borderColor: color.theme}]}>
 							<Image style={{marginBottom: 10, width: wWidth / 2 - 70, resizeMode: 'contain', height: 50}}
 							       source={require('../assets/cek-icon.fw.png')}/>
@@ -26,7 +26,7 @@ const HomeScreen = () => {
 							</Text>
 						</View>
 					</TouchableOpacity>
-					<TouchableOpacity>
+					<TouchableOpacity onPress={() => navigate('firmSettings')}>
 						<View style={[styles.ButtonArea, {borderBottomWidth: 4, borderColor: color.gradientEnd}]}>
 							<Image style={{marginBottom: 10, width: wWidth / 2 - 70, resizeMode: 'contain', height: 50}}
 							       source={require('../assets/setttings-icon-2.fw.png')}/>
