@@ -1,0 +1,6 @@
+module Pods_cekfinansportal_cekfinansportalTests {
+  umbrella header "Pods-cekfinansportal-cekfinansportalTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
