@@ -6,6 +6,7 @@ const color = {
 	gradientStart2: '#258293',
 	gradientEnd2: '#1a6876',
 	secondary:'#aaa',
+	lightGray:'#dcdada',
 	secondary2:'#747373',
 	white:'#fff',
 	black:'#222',
