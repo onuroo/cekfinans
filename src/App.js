@@ -24,6 +24,7 @@ import ForgotScreen from './screen/Auth/forgot';
 import HomeScreen from './screen/Home';
 import SettingsScreen from './screen/Settings';
 import CheckScreen from './screen/Check';
+import SplashScreen from './screen/Splash';
 import Tabs from './components/Tab'
 import {navigationRef} from "./config/navigator";
 import CheckAddScreen from "./screen/CheckAdd";
@@ -44,7 +45,8 @@ const App = () => {
 		<>
 			<ThemeProvider>
 				<NavigationContainer ref={navigationRef}>
-					<Stack.Navigator initialRouteName="home" headerMode="none">
+					<Stack.Navigator initialRouteName="splash" headerMode="none">
+						<Stack.Screen name="splash" component={ SplashScreen } />
 						<Stack.Screen name="login" component={LoginScreen}/>
 						<Stack.Screen name="register" component={RegisterScreen}/>
 						<Stack.Screen name="forgot" component={ForgotScreen}/>
