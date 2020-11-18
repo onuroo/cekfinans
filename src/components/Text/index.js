@@ -2,7 +2,7 @@ import React from 'react';
 import {Text, StyleSheet} from 'react-native';
 import {fontSize,color} from "../ThemeConfig";
 
-const TextConsumer = ({h1, h2, h3, h4, h5, h6, p,style, bold, medium,color, regular, white,center, black,...props}) => {
+const TextConsumer = ({h1, h2, h3, h4, h5, h6, p,style, bold, medium,color, regular, white,center,right,left, black,...props}) => {
 	return (
 		<Text style={[
 			h1 && styles.h1,
@@ -18,6 +18,8 @@ const TextConsumer = ({h1, h2, h3, h4, h5, h6, p,style, bold, medium,color, regu
 			white && styles.white,
 			black && styles.black,
 			center && styles.center,
+			right && styles.right,
+			left && styles.left,
 			style && style,
 			{color:color},
 		]}
@@ -40,6 +42,8 @@ const styles = StyleSheet.create({
 		fontSize: fontSize.h5
 	}, h6: {
 		fontSize: fontSize.h6
+	}, p: {
+		fontSize: fontSize.p
 	},
 	white:{
 		color:color.white,
@@ -61,6 +65,12 @@ const styles = StyleSheet.create({
 	},
 	center:{
 		textAlign:'center',
+	},
+	right:{
+		textAlign:'right',
+	},
+	left:{
+		textAlign:'left',
 	},
 })
 export default TextConsumer;

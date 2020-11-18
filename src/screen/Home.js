@@ -3,6 +3,7 @@ import {StyleSheet, Image, TouchableOpacity, Dimensions, View} from "react-nativ
 import {color} from "../components/ThemeConfig";
 import LinearGradient from "react-native-linear-gradient";
 import {Text, Header, UserComponent} from "../components";
+import {navigate} from "../config/navigator";
 
 let {width: wWidth, height: wHeight} = Dimensions.get('window');
 const HomeScreen = () => {

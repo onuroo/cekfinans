@@ -11,8 +11,8 @@ const Header = ({left,title,description,center,right}) => {
 			</View>
 			<View style={styles.center}>
 				{center ? <LogoYatay /> :title && <View>
-					<Text center color={color.white} h6>{title}</Text>
-					<Text center color={color.white} p>{description}</Text>
+					{title && <Text center color={color.white} h6>{title}</Text>}
+					{description && <Text center color={color.white} p>{description}</Text>}
 				</View>}
 			</View>
 			<View style={styles.right}>

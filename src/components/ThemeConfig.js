@@ -21,6 +21,7 @@ const fontSize = {
 	h4:24,
 	h5:20,
 	h6:16,
+	p:12,
 }
 export {
 	color,
