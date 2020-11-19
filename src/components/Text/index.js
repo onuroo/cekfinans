@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
 	},
 	medium:{
 		fontFamily:'NunitoSans-SemiBold',
-		fontWeight:'600',
+		fontWeight:'700',
 	},
 	regular:{
 		fontFamily:'NunitoSans-Regular',
