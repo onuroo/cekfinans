@@ -13,7 +13,7 @@ const CheckForm = () => {
 			<View style={{
 				padding: 20,
 			}}>
-				<Input placeholder={'FATURA BBORÇLUSU VKN'}/>
+				<Input placeholder={'FATURA BORÇLUSU VKN'}/>
 				<Input placeholder={'FATURA TUTARI'}/>
 				<Input placeholder={'Faturaya konu olan ticaretin içeriğini yazınız.'}/>
 				<Input placeholder={'ÇEK MİKTARI'}/>

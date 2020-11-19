@@ -6,6 +6,7 @@ const color = {
 	gradientStart2: '#258293',
 	gradientEnd2: '#1a6876',
 	secondary:'#aaa',
+	lightGray:'#dcdada',
 	secondary2:'#747373',
 	white:'#fff',
 	black:'#222',
@@ -21,6 +22,7 @@ const fontSize = {
 	h4:24,
 	h5:20,
 	h6:16,
+	p:12,
 }
 export {
 	color,
