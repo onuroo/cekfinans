@@ -10,6 +10,9 @@ let city = [
 ]
 const FirmSettingsScreen = () => {
 	let textColor = color.gradientEnd2;
+	let onChange = (value) => {
+		console.log(value)
+	}
 	return (
 		<View style={styles.container}>
 			<Header left={<GoBack />} title={'İşletme Ayarları'}/>
@@ -65,13 +68,13 @@ const FirmSettingsScreen = () => {
 							<Text h5 color={color.gradientEnd}>Firma Adres: </Text>
 						</View>
 						<View style={styles.row}>
-							<Selected placeholder={'Şehir Seç'} data={city}/>
+							<Selected onChange={onChange} placeholder={'Şehir Seç'} data={city}/>
 						</View>
 						<View style={styles.row}>
-							<Selected placeholder={'İlçe Seç'} data={city}/>
+							<Selected onChange={onChange}placeholder={'İlçe Seç'} data={city}/>
 						</View>
 						<View style={styles.row}>
-							<Selected placeholder={'Mahalle Seç'} data={city}/>
+							<Selected onChange={onChange} placeholder={'Mahalle Seç'} data={city}/>
 						</View>
 					</View>
 					<View style={styles.row}>

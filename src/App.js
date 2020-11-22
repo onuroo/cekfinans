@@ -48,7 +48,7 @@ const App = () => {
 		<>
 			<ThemeProvider>
 				<NavigationContainer ref={navigationRef}>
-					<Stack.Navigator initialRouteName="splash" headerMode="none">
+					<Stack.Navigator initialRouteName="home" headerMode="none">
 						<Stack.Screen name="splash" component={ SplashScreen } />
 						<Stack.Screen name="login" component={LoginScreen}/>
 						<Stack.Screen name="register" component={RegisterScreen}/>
