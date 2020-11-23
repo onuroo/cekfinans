@@ -6,12 +6,11 @@ import {color} from "../ThemeConfig";
 const Selected = ({placeholder,onChange, data}) => {
 	let [visible, setVisible] = useState(false);
 	let [searchText, setSearch] = useState('');
-	let [selected, setSelected] = useState({id:0,name:`${placeholder}`});
-
+	let [selected, setSelected] = useState({id:0,title:`${placeholder}`});
 	return (
 		<View styles={styles.container}>
 			<TouchableOpacity style={styles.text} onPress={() => setVisible(!visible)}>
-				<Text color={color.gradientEnd} h6>{selected.name ? selected.name : placeholder}</Text>
+				<Text color={color.gradientEnd} h6>{selected.title ? selected.title : placeholder}</Text>
 				<Icon
 					name={'chevron-down'}
 					size={22}
@@ -51,10 +50,10 @@ const Selected = ({placeholder,onChange, data}) => {
 					       value={searchText} onChangeText={text => setSearch(text)}/>
 				</View>
 				<ScrollView>
-					{data.filter(item => item.name.toLowerCase().includes(searchText.toLowerCase())).map(item => {
+					{data.length > 0 && data.filter(item => item.title.toLowerCase().includes(searchText.toLowerCase())).map(item => {
 						return (
 							<TouchableOpacity onPress={()=> setSelected(item)} style={styles.listItem} key={item.id}>
-								<Text medium color={color.primary} h6>{item.name}</Text>
+								<Text medium color={color.primary} h6>{item.title}</Text>
 								{selected.id !== 0 && selected.id === item.id && (
 									<Icon color={color.primary} name={'check'} size={20}/>
 								)}
