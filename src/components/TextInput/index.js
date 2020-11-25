@@ -5,13 +5,13 @@ import {Text} from "../";
 
 const Input = (props) => {
 	return (
-		<View style={styles.container}>
+		<View style={[styles.container,props.style]}>
 			{props.text !== undefined &&
 			<View style={{alignContent: 'center', flex:0.2, alignItems: 'center', justifyContent: 'center'}}>
 				<Text>{props.text}</Text>
 			</View>
 			}
-			<TextInput placeholderTextColor={color.primary} style={[styles.input,{paddingLeft:props.left?0:10}]} {...props} />
+			<TextInput style={[styles.input,{paddingLeft:props.left?0:10}]} {...props} />
 			{props.rightIcon !== undefined &&
 			<View style={{alignContent: 'center', flex: 0.2, alignItems: 'center', justifyContent: 'center'}}>
 				{props.rightIcon}
