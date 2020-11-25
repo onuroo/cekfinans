@@ -12,7 +12,7 @@ import {color} from "../components/ThemeConfig";
 
 const CodeVerify = ({ route }) => {
   const [value, setValue] = useState(null);
-  const { token, code } = route.params;
+  const { token, code, tckn, password } = route.params;
   const [error, setError] = useState(null);
 
   const {
@@ -22,7 +22,7 @@ const CodeVerify = ({ route }) => {
   const onPress = () => {
       if (code && value && code.toString() === value.toString()) {
         setError(null);
-        onRegisterUserControl(`?token=${token}&code=${code}`);
+        onRegisterUserControl(`?token=${token}&code=${code}`, tckn, password);
       } else {
         setError('Kod yanlış!');
       }

@@ -51,7 +51,7 @@ const RegisterHooks = () => {
         AuthRequests.userRegister(queryParams).then((response) => {
           closeLoading();
           const { token, code } = response;
-          navigatePush('codeVerify', { token, code });
+          navigatePush('codeVerify', { token, code, tckn, password });
         }).catch((error) => {
           closeLoading();
           navigatePush('errorModal', { message: error.message });
@@ -62,14 +62,14 @@ const RegisterHooks = () => {
     }
   }
 
-  const onRegisterUserControl = (queryParams) => {
+  const onRegisterUserControl = (queryParams, company_official_tckn, user_password) => {
     return new Promise((resolve, reject) => {
       openLoading();
       AuthRequests.userRegisterControl(queryParams).then((response) => {
         closeLoading();
         const loginPostBody = {
-          company_official_tckn: tckn,
-          password,
+          company_official_tckn,
+          password: user_password,
         }
         AuthRequests.login(loginPostBody).then((response) => {
           console.log('login response', response);
