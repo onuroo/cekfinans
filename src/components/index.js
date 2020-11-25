@@ -8,6 +8,7 @@ import Icon from "./Icon/index";
 import CheckBox from "./Checkbox/index";
 import Modal from "./Modal/index";
 import Date from "./Date/index";
+import Selected from "./Selected/index";
 import UserComponent from "./UserComponent/index";
 export {
 	Header,
@@ -21,4 +22,5 @@ export {
 	UserComponent,
 	Modal,
 	Date,
+	Selected,
 }

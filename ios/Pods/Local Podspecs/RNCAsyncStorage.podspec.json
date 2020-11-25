@@ -1,5 +1,6 @@
 {
   "name": "RNCAsyncStorage",
+<<<<<<< HEAD
   "version": "1.13.2",
   "summary": "Asynchronous, persistent, key-value storage system for React Native.",
   "license": "MIT",
@@ -8,18 +9,34 @@
     "email": "hello@krizzu.dev"
   },
   "homepage": "https://github.com/react-native-async-storage/async-storage#readme",
+=======
+  "version": "1.12.1",
+  "summary": "Asynchronous, persistent, key-value storage system for React Native.",
+  "license": "MIT",
+  "authors": "Krzysztof Borowy <hello@krizzu.dev>",
+  "homepage": "https://github.com/react-native-community/react-native-async-storage#readme",
+>>>>>>> origin/Serdal
   "platforms": {
     "ios": "9.0",
     "tvos": "9.2",
     "osx": "10.14"
   },
   "source": {
+<<<<<<< HEAD
     "git": "https://github.com/react-native-async-storage/async-storage.git",
     "tag": "v1.13.2"
   },
   "source_files": "ios/**/*.{h,m}",
   "dependencies": {
     "React": [
+=======
+    "git": "https://github.com/react-native-community/react-native-async-storage.git",
+    "tag": "v1.12.1"
+  },
+  "source_files": "ios/**/*.{h,m}",
+  "dependencies": {
+    "React-Core": [
+>>>>>>> origin/Serdal
 
     ]
   }
