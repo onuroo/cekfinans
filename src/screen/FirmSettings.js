@@ -19,7 +19,7 @@ const FirmSettingsScreen = () => {
         }
         fetchData();
 
-    },[city])
+    },[])
     useEffect(() => {
         async function fetchData() {
             setSelectedDistrict(null)
