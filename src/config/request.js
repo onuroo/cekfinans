@@ -1,4 +1,4 @@
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import configApi from './index';
 import {navigate} from './navigator';
@@ -31,7 +31,10 @@ request.interceptors.request.use(
 
 request.interceptors.response.use(
   function (response) {
-    return response.data;
+    console.log('333333 response', response);
+    if (response.status === 206) {
+      return Promise.reject(response.data);
+    } else return response.data;
   },
   async function (error) {
     if (error.response) {

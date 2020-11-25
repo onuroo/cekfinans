@@ -2,8 +2,18 @@ import React from 'react'
 import {View, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard, StyleSheet} from 'react-native'
 import {Text, Button,GoBack, Header, Logo, Input} from './../../components'
 import {color} from "../../components/ThemeConfig";
+import RegisterHooks from '../../hooks/register.hooks';
 
 const Register = ({navigation}) => {
+	const {
+		namesurname, setNamesurname,
+		tckn, setTckn,
+		phone, setPhone,
+		email, setEmail,
+		password, setPassword,
+		passwordAgain, setPasswordAgain,
+		onRegister
+	} = RegisterHooks();
 	return (
 		<View style={styles.container}>
 			<Header left={<GoBack navigation={navigation} />} center={<Text h4 bold center color={color.white} white> Kayıt Ol</Text>}/>
@@ -16,34 +26,45 @@ const Register = ({navigation}) => {
 					<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 						<View style={styles.inner}>
 							<View style={styles.justifyContent}>
-								<Input onChangeText={(val) => console.log(val)}
+								<Input onChangeText={(val) => setNamesurname(val)}
+									   value={ namesurname }
 								       autoCapitalize={'none'}
 								       autoCompleteType={'off'}
 								       placeholder={'Ad Soyad'}
 								/>
-								<Input onChangeText={(val) => console.log(val)}
+								<Input onChangeText={(val) => setTckn(val)}
+									   value={ tckn }
+								       autoCapitalize={'none'}
+								       autoCompleteType={'off'}
+								       placeholder={'T.C. Kimlik no'}
+								/>
+								<Input onChangeText={(val) => setPhone(val)}
+									   value={ phone }
 								       autoCapitalize={'none'}
 								       autoCompleteType={'off'}
 								       placeholder={'Telefon'}
 								/>
-								<Input onChangeText={(val) => console.log(val)}
+								<Input onChangeText={(val) => setEmail(val)}
+								 	   value={ email }
 								       autoCapitalize={'none'}
 								       autoCompleteType={'off'}
 								       placeholder={'Email'}
 								/>
-								<Input onChangeText={(val) => console.log(val)}
+								<Input onChangeText={(val) => setPassword(val)}
+								  	   value={ password }
 								       autoCapitalize={'none'}
 								       autoCompleteType={'off'}
 								       placeholder={'Şifre'}
 								/>
-								<Input onChangeText={(val) => console.log(val)}
+								<Input onChangeText={(val) => setPasswordAgain(val)}
+									   value={ passwordAgain }
 								       autoCapitalize={'none'}
 								       autoCompleteType={'off'}
 								       placeholder={'Şifre Tekrar'}
 								/>
 							</View>
 							<View style={styles.justifyContent}>
-								<Button color={color.white} variant={'primary'} onPress={() => console.log('asasd')}
+								<Button color={color.white} variant={'primary'} onPress={ onRegister }
 								        style={{width: 200}} title={'Kayıt Ol'}/>
 							</View>
 							<View style={[styles.justifyContent, {marginTop: 20}]}>

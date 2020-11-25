@@ -32,6 +32,13 @@ import Tabs from './components/Tab'
 import {navigationRef} from "./config/navigator";
 import CheckAddScreen from "./screen/CheckAdd";
 import CheckForm from "./screen/Check/checkForm";
+import CodeVerify from "./screen/CodeVerify";
+
+import { ModalTransition } from "./navigation/animations";
+import ErrorModal from "./components/ErrorModal";
+import SuccessModal from "./components/SuccessModal";
+import LoadingModal from "./components/LoadingModal";
+
 function TabScreen() {
 	return (
 		<Tab.Navigator
@@ -48,7 +55,7 @@ const App = () => {
 		<>
 			<ThemeProvider>
 				<NavigationContainer ref={navigationRef}>
-					<Stack.Navigator initialRouteName="splash" headerMode="none">
+					<Stack.Navigator initialRouteName="register" headerMode="none">
 						<Stack.Screen name="splash" component={ SplashScreen } />
 						<Stack.Screen name="login" component={LoginScreen}/>
 						<Stack.Screen name="register" component={RegisterScreen}/>
@@ -59,6 +66,10 @@ const App = () => {
 						<Stack.Screen name="list" component={ListScreen}/>
 						<Stack.Screen name="listDetail" component={ListDetailScreen}/>
 						<Stack.Screen name="firmSettings" component={FirmSettingsScreen}/>
+						<Stack.Screen name="errorModal" component={ErrorModal} options={ { ...ModalTransition } } />
+						<Stack.Screen name="successModal" component={SuccessModal} options={ { ...ModalTransition } } />
+						<Stack.Screen name="loading" component={LoadingModal} options={ { ...ModalTransition } } />
+						<Stack.Screen name="codeVerify" component={CodeVerify} />
 					</Stack.Navigator>
 				</NavigationContainer>
 			</ThemeProvider>
