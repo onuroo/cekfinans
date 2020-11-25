@@ -1,23 +1,23 @@
 import React, {useEffect, useState} from 'react'
-import {View, StyleSheet, TextInput, ScrollView, TouchableOpacity} from 'react-native'
-import {Icon, Input, Modal, Text} from '../index';
+import {View, StyleSheet, Modal,TextInput, ScrollView, TouchableOpacity} from 'react-native'
+import {Icon, Input,  Text} from '../index';
 import {color} from "../ThemeConfig";
 
-const Selected = ({placeholder,onChange, data}) => {
+const Selected = ({placeholder,selected,setSelected, type,data}) => {
 	let [visible, setVisible] = useState(false);
 	let [searchText, setSearch] = useState('');
-	let [selected, setSelected] = useState({id:0,title:`${placeholder}`});
+	let select = selected ? selected :{id:0,title:`${placeholder}`};
 	return (
 		<View styles={styles.container}>
 			<TouchableOpacity style={styles.text} onPress={() => setVisible(!visible)}>
-				<Text color={color.gradientEnd} h6>{selected.title ? selected.title : placeholder}</Text>
+				<Text color={color.gradientEnd} h6>{select.title ? select.title : placeholder}</Text>
 				<Icon
 					name={'chevron-down'}
 					size={22}
 					color={color.primary}
 				/>
 			</TouchableOpacity>
-			<Modal setVisible={setVisible} visible={visible} ratio={1}>
+			<Modal setVisible={setVisible} visible={visible} ratio={0.5}>
 				<View style={{
 					paddingVertical: 20,
 					marginTop: 20,
@@ -52,9 +52,11 @@ const Selected = ({placeholder,onChange, data}) => {
 				<ScrollView>
 					{data.length > 0 && data.filter(item => item.title.toLowerCase().includes(searchText.toLowerCase())).map(item => {
 						return (
-							<TouchableOpacity onPress={()=> setSelected(item)} style={styles.listItem} key={item.id}>
+							<TouchableOpacity onPress={()=> {
+								setSelected(item)
+							}} style={styles.listItem} key={item.id}>
 								<Text medium color={color.primary} h6>{item.title}</Text>
-								{selected.id !== 0 && selected.id === item.id && (
+								{select.id !== 0 && select.id === item.id && (
 									<Icon color={color.primary} name={'check'} size={20}/>
 								)}
 							</TouchableOpacity>

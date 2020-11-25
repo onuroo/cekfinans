@@ -10,23 +10,28 @@ const FirmSettingsScreen = () => {
     let [city, setCity] = useState([]);
     let [district, setDistrict] = useState([]);
     let [selectedCity, setSelectedCity] = useState(null);
-    let onChange = (value) => {
-        setSelectedCity(value)
-    }
-    console.log(selectedCity)
-    useEffect(async () => {
-        await request.post('common/cities').then(res => {
-            setCity(res.cities)
-        })
-    }, [])
-    useEffect(async () => {
-        console.log(selectedCity)
-        if (selectedCity) {
-            await request.post('common/district', {id: selectedCity}).then(res => {
+    let [selectedDistrict, setSelectedDistrict] = useState(null);
+    useEffect(() => {
+        async function fetchData() {
+            await request.post('common/cities').then(res => {
+                setCity(res.cities)
+            })
+        }
+        fetchData();
+
+    },[city])
+    useEffect(() => {
+        async function fetchData() {
+            setSelectedDistrict(null)
+            setDistrict([])
+            await request.post('common/district',{id:selectedCity.id}).then(res => {
                 setDistrict(res.district)
             })
         }
-    }, [selectedCity])
+        if (selectedCity){
+            fetchData();
+        }
+    },[selectedCity])
     return (
         <View style={styles.container}>
             <Header left={<GoBack/>} title={'İşletme Ayarları'}/>
@@ -83,13 +88,13 @@ const FirmSettingsScreen = () => {
                             <Text h5 color={color.gradientEnd}>Firma Adres: </Text>
                         </View>
                         <View style={styles.row}>
-                            <Selected onChange={onChange} placeholder={'Şehir Seç'} data={city}/>
+                            <Selected selected={selectedCity} setSelected={setSelectedCity} type={'city'} placeholder={'Şehir Seç'} data={city}/>
                         </View>
                         <View style={styles.row}>
-                            <Selected onChange={onChange} placeholder={'İlçe Seç'} data={district}/>
+                            <Selected selected={selectedDistrict} setSelected={setSelectedDistrict} type={'district'} placeholder={'İlçe Seç'} data={district}/>
                         </View>
                         <View style={styles.row}>
-                            <Selected onChange={onChange} placeholder={'Mahalle Seç'} data={city}/>
+                            <Selected placeholder={'Mahalle Seç'} data={city}/>
                         </View>
                     </View>
                     <View style={styles.row}>
