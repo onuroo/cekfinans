@@ -23,6 +23,12 @@ const NavigationActions = () => {
     );
   };
 
+  const navigateReset = (routeName, params = {}) => {
+    navigation.dispatch(
+      StackActions.replace(routeName, params),
+    );
+  };
+
   const openLoading = () => {
     navigatePush('loading');
   }
@@ -35,6 +41,7 @@ const NavigationActions = () => {
     tabNavigate,
     navigatePush,
     navigatePop,
+    navigateReset,
     openLoading,
     closeLoading
   };

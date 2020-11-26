@@ -8,13 +8,24 @@ import {Text, Header, CheckBox, Icon, Button, Logo, Input} from './../../compone
 import {color, fontSize} from "../../components/ThemeConfig";
 import LinearGradient from 'react-native-linear-gradient';
 
+import LoginHooks from '../../hooks/login.hooks';
 const Login = ({navigation, route}) => {
 	let [tab, setTab] = useState(1)
 	let [Check1, setCheck1] = useState(false)
 	let [Check2, setCheck2] = useState(false)
+	
+	const {
+		tckn,
+		setTckn,
+		password,
+		setPassword,
+		onLogin,
+	} = LoginHooks();
+	
 	let [showPassword, setShowPassword] = useState(true)
 	let [registerShowPassword, setRegisterShowPassword] = useState(true)
 	let [registerShowRepeatPassword, setRegisterShowRepeatPassword] = useState(true)
+
 	return (
 		<View style={styles.container}>
 			<Header center={<Logo/>}/>
@@ -47,7 +58,8 @@ const Login = ({navigation, route}) => {
 							</Text>
 						</View>
 						<View style={styles.justifyContent}>
-							<Input onChangeText={(val) => console.log(val)}
+							<Input onChangeText={(val) => setTckn(val)}
+								   value={ tckn }
 							       autoCapitalize={'none'}
 							       autoCompleteType={'off'}
 							       keyboardType={'numeric'}
@@ -55,7 +67,8 @@ const Login = ({navigation, route}) => {
 							       maxLength={11}
 							/>
 							<Input
-								onChangeText={(val) => console.log(val)}
+								onChangeText={(val) => setPassword(val)}
+								value={ password }
 								autoCapitalize={'none'}
 								autoCompleteType={'off'}
 								placeholder={'Şifre'}
@@ -155,7 +168,7 @@ const Login = ({navigation, route}) => {
 						</View>
 					</View>}
 				<View style={[styles.justifyContent, {flex: 0.2}]}>
-					<Button color={color.white} variant={'primary'} onPress={() => console.log('asasd')}
+					<Button color={color.white} variant={'primary'} onPress={ onLogin }
 					        style={{width: 200}} title={'Giriş Yap'}/>
 				</View>
 

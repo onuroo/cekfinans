@@ -32,7 +32,7 @@ class AuthRequests {
   login(postBody) {
     return new Promise((resolve, reject) => {
         console.log('222222 login postbody', postBody)
-        request.post('login', postBody).then((response) => {
+        request.post('user/login', postBody).then((response) => {
             console.log('login response', response);
             resolve(response);
         }).catch((error) => {

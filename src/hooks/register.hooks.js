@@ -6,12 +6,12 @@ import AuthRequests from '../requests/auth.requests';
 import NavigationActions from '../navigation/navigationActions';
 
 const RegisterHooks = () => {
-  const [namesurname, setNamesurname] = useState('As Firin Makine');
-  const [tckn, setTckn] = useState('12345678912');
-  const [phone, setPhone] = useState('5556667788');
-  const [email, setEmail] = useState('info@asfirinmakine.com');
-  const [password, setPassword] = useState('2020asfirinmakine');
-  const [passwordAgain, setPasswordAgain] = useState('2020asfirinmakine');
+  const [namesurname, setNamesurname] = useState('As Firin Makine');
+  const [tckn, setTckn] = useState('12345678912');
+  const [phone, setPhone] = useState('5556667788');
+  const [email, setEmail] = useState('info@asfirinmakine.com');
+  const [password, setPassword] = useState('2020asfirinmakine');
+  const [passwordAgain, setPasswordAgain] = useState('2020asfirinmakine');
 
   const { navigatePush, openLoading, closeLoading, navigatePop } = NavigationActions();
   
@@ -44,21 +44,21 @@ const RegisterHooks = () => {
   }
 
   const onRegister = () => {
-    if (isValidated()) {
+    if (isValidated()) {
       const queryParams = `?company_official_name=${namesurname}&company_official_tckn=${tckn}&company_official_email=${email}&company_official_phone=${phone}&password=${password}&password_restart=${passwordAgain}`;
       return new Promise((resolve, reject) => {
         openLoading();
         AuthRequests.userRegister(queryParams).then((response) => {
           closeLoading();
           const { token, code } = response;
-          navigatePush('codeVerify', { token, code, tckn, password });
+          navigatePush('codeVerify', { token, code, tckn, password });
         }).catch((error) => {
           closeLoading();
-          navigatePush('errorModal', { message: error.message });
+          navigatePush('errorModal', { message: error.message });
         })
       })
     } else {
-      navigatePush('errorModal', { message: getValidationError() });
+      navigatePush('errorModal', { message: getValidationError() });
     }
   }
 
@@ -79,10 +79,10 @@ const RegisterHooks = () => {
         .catch((error) => {
           console.log('login error', error);
         });
-        // navigatePush('codeVerify', { token, code });
+        // navigatePush('codeVerify', { token, code });
       }).catch((error) => {
         closeLoading();
-        navigatePush('errorModal', { message: error.message });
+        navigatePush('errorModal', { message: error.message });
       })
     })
   }
