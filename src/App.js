@@ -6,10 +6,11 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import {
 	Text,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import 'react-native-gesture-handler';
 import ThemeProvider from "./components/ThemeProvider";
@@ -51,11 +52,36 @@ function TabScreen() {
 	);
 }
 const App = () => {
+	const [state, setState] = useState({ token: null, isReady: false });
+
+	  React.useEffect(() => {
+		const readToken = async () => {
+		  let userToken;
+	
+		  try {
+			userToken = await AsyncStorage.getItem('token');
+		  } catch (e) {
+			// Restoring token failed
+			setState({
+				token: null,
+				isReady: true,
+			});
+		  }
+		  setState({
+			  token: JSON.parse(userToken),
+			  isReady: true,
+		  });
+		};
+	
+		readToken();
+	  }, []);
+
+	if (!state.isReady) return null;
 	return (
 		<>
 			<ThemeProvider>
 				<NavigationContainer ref={navigationRef}>
-					<Stack.Navigator initialRouteName="login" headerMode="none">
+					<Stack.Navigator initialRouteName={  state.token == null ? 'login' : 'home' } headerMode="none">
 						<Stack.Screen name="splash" component={ SplashScreen } />
 						<Stack.Screen name="login" component={LoginScreen}/>
 						<Stack.Screen name="register" component={RegisterScreen}/>
