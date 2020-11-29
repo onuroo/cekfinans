@@ -35,7 +35,6 @@ function MyTabBar({state, descriptors, navigation}) {
 		return null;
 	}
 	return (
-		<SafeAreaView>
 			<View style={{flexDirection: 'row', borderTopWidth: 2,}}>
 				{state.routes.map((route, index) => {
 					const {options} = descriptors[route.key];
@@ -122,7 +121,6 @@ function MyTabBar({state, descriptors, navigation}) {
 					);
 				})}
 			</View>
-		</SafeAreaView>
 	);
 }
 

@@ -8,7 +8,7 @@
 
 import React, {useState} from 'react';
 import {
-    Text,
+    View, TouchableOpacity
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -17,6 +17,7 @@ import ThemeProvider from "./components/ThemeProvider";
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
+import {createDrawerNavigator} from '@react-navigation/drawer';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -36,6 +37,7 @@ import CheckAddScreen from "./screen/CheckAdd";
 import CheckForm from "./screen/Check/checkForm";
 import AddInvoiceForm from "./screen/Check/AddInvoiceForm";
 import CodeVerify from "./screen/CodeVerify";
+import PasswordChangeScreen from "./screen/PasswordChangeScreen";
 
 import {ModalTransition} from "./navigation/animations";
 import ErrorModal from "./components/ErrorModal";
@@ -44,6 +46,56 @@ import SuccessModal from "./components/SuccessModal";
 import LoadingModal from "./components/LoadingModal";
 import AppStateProvider from "./context/CheckContext";
 import AddInvoice from './components/AddInvoice'
+import {useWindowDimensions} from 'react-native';
+
+import {color} from "./components/ThemeConfig";
+import {Logo, Icon, Text} from "./components";
+import LogoYatay from "./components/Logo/logo-yatay";
+
+function CustomDrawerContent(props) {
+    return (
+        <View style={{flex: 1, zIndex: 99999999999999999}}>
+            <View style={{
+                flex: 0.2,
+                alignItems: 'center',
+                justifyContent: 'center',
+                backgroundColor: color.gradientStart
+            }}>
+                <LogoYatay/>
+            </View>
+            <View style={{flex: 1, justifyContent: 'space-between'}}>
+                <View style={{marginTop: 10}}>
+                    <TouchableOpacity style={{width: '100%', paddingLeft: 10}}
+                                      onPress={() => props.navigation.navigate('PasswordChange')}>
+                        <Text left h5> Şifre Değiştir</Text>
+                    </TouchableOpacity>
+                </View>
+                <View style={{marginVertical: 100}}>
+                    <TouchableOpacity
+                        style={{width: '100%', flexDirection: 'row', alignItems: 'center', paddingLeft: 10}}
+                        onPress={() => AsyncStorage.removeItem('token')}>
+                        <Icon size={22} color={color.black} name={'log-out'}/>
+                        <Text left h5> Çıkış Yap </Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
+        </View>
+    );
+}
+
+const Drawer = createDrawerNavigator();
+
+
+function DrawerScreens() {
+    return (
+        <Drawer.Navigator initialRouteName={'home'} drawerType={'front'}
+                          drawerContent={(props) => <CustomDrawerContent {...props} />}>
+            <Drawer.Screen name="home" component={TabScreen}/>
+        </Drawer.Navigator>
+    );
+}
+
+
 function TabScreen() {
     return (
         <Tab.Navigator
@@ -58,7 +110,6 @@ function TabScreen() {
 
 const App = () => {
     const [state, setState] = useState({token: null, isReady: false});
-    console.log(state)
     React.useEffect(() => {
         const readToken = async () => {
             let userToken;
@@ -94,7 +145,7 @@ const App = () => {
                             <Stack.Screen name="login" component={LoginScreen}/>
                             <Stack.Screen name="register" component={RegisterScreen}/>
                             <Stack.Screen name="forgot" component={ForgotScreen}/>
-                            <Stack.Screen name="home" component={TabScreen}/>
+                            <Stack.Screen name="home" component={DrawerScreens}/>
                             <Stack.Screen name="checkAdd" component={CheckAddScreen}/>
                             <Stack.Screen name="checkForm" component={CheckForm}/>
                             <Stack.Screen name="list" component={ListScreen}/>
@@ -107,6 +158,7 @@ const App = () => {
                             <Stack.Screen name="addInvoiceForm" component={AddInvoiceForm}/>
                             <Stack.Screen name="loading" component={LoadingModal} options={{...ModalTransition}}/>
                             <Stack.Screen name="codeVerify" component={CodeVerify}/>
+                            <Stack.Screen name="PasswordChange" component={PasswordChangeScreen}/>
                         </Stack.Navigator>
                     </NavigationContainer>
                 </ThemeProvider>

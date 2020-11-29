@@ -2,14 +2,19 @@ import React from 'react';
 import {StyleSheet, Image, TouchableOpacity, Dimensions, View} from "react-native";
 import {color} from "../components/ThemeConfig";
 import LinearGradient from "react-native-linear-gradient";
-import {Text, Header, UserComponent} from "../components";
+import {Text, Header, UserComponent, Icon} from "../components";
 import {navigate} from "../config/navigator";
-
 let {width: wWidth, height: wHeight} = Dimensions.get('window');
-const HomeScreen = () => {
+const HomeScreen = ({navigation}) => {
 	return (
 		<View style={styles.container}>
-			<Header center/>
+			<Header left={
+				<TouchableOpacity style={{padding: 20,}} onPress={() => {
+					navigation.toggleDrawer();
+				}}>
+					<Icon name={'user'} size={22} color={color.white} />
+				</TouchableOpacity>
+			} center/>
 			<View style={{flex: 1}}>
 				<LinearGradient colors={[color.gradientStart, color.gradientStart, color.gradientEnd]}
 				                style={styles.linearGradient}>

@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import checkRequests from '../requests/check.requests'
 export const AppStateContext = React.createContext();
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import moment from "moment";
 
 const AppStateProvider = props => {
     const [exFaturaInfo, setExFaturaInfo] = useState(null);
@@ -46,7 +47,7 @@ const AppStateProvider = props => {
         else if (!ftKonu) return 'Fatura konu bilgisi boş olamaz!';
         else if (!cekPrice) return 'Çek Miktarı bilgisi boş bırakılamaz';
         else if (!cekDate) return 'Çek Tarihi bilgisi boş bırakılamaz';
-        else if (!cekVKN!=='' && cekVKN.length !== 11) return 'Çek VKN 11 karakter olmalıdır!';
+        else if (cekVKN!=='' && cekVKN.length !== 11) return 'Çek VKN 11 karakter olmalıdır!';
         else if (!priceType) return 'Fiyat Tipi Boş Bırakılamaz!';
         else if (!cekNumber) return 'Çek Numarası Boş Bırakılamaz!';
         else return null;
@@ -56,20 +57,21 @@ const AppStateProvider = props => {
        return new Promise(async (resolve, reject) => {
             if (validates()) {
                 let token = await AsyncStorage.getItem('token');
-                console.log(token)
+                console.log(chekOn)
+                let date = moment(cekDate,'DD-MM-YYYY').format('YYYY-MM-DD')
                 let params = new FormData();
-                params.append('token',token);
+                params.append('token',JSON.parse(token));
                 params.append('check_bill_debtor_vkn',ftVKN);
                 params.append('check_invoice_amount',ftPrice);
                 params.append('check_content',ftKonu);
                 params.append('check_total',cekPrice);
-                params.append('check_date',cekDate);
+                params.append('check_date',date);
                 params.append('check_vkn',cekVKN);
-                params.append('check_currency_unit',priceType);
+                params.append('check_currency_unit',priceType.title);
                 params.append('check_number',cekNumber);
-                params.append('check_image_tax',chekFatura);
-                params.append('check_image_front',chekOn);
-                params.append('check_image_back',chekArka);
+                params.append('check_image_tax',{uri: chekFatura.uri, name: chekFatura.fileName+'-.jpg', type: chekFatura.type});
+                params.append('check_image_front',{uri: chekOn.uri, name: chekOn.fileName+'-.jpg', type: chekOn.type});
+                params.append('check_image_back',{uri: chekArka.uri, name: chekArka.fileName+'-.jpg', type: chekArka.type});
                 if (extraData.length > 0){
                     extraData.map(item => {
                         params.append('check_invoice_extra_images[]',item);
