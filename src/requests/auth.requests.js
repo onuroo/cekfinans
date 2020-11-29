@@ -31,12 +31,9 @@ class AuthRequests {
   
   login(postBody) {
     return new Promise((resolve, reject) => {
-        console.log('222222 login postbody', postBody)
         request.post('user/login', postBody).then((response) => {
-            console.log('login response', response);
             resolve(response);
         }).catch((error) => {
-            console.log('login error', error);
             reject(error);
         });
   

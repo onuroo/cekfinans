@@ -48,9 +48,9 @@ LocaleConfig.locales.tr = {
 	today: 'Bugün',
 };
 LocaleConfig.defaultLocale = 'tr';
-const Dates = ({onChange, label,}) => {
+const Dates = ({setSelected,selected, label,}) => {
 	const [show, setShow] = useState(false);
-	const [date, setDate] = useState('');
+	const [date, setDate] = useState(selected !== null ? moment(selected,'DD-MM-YYYY').format('YYYY-MM-DD'):'');
 	useEffect(()=> {
 		moment().locale('tr');
 	})
@@ -135,7 +135,7 @@ const Dates = ({onChange, label,}) => {
 									);
 								}}
 								onDayPress={(day) => {
-									onChange(
+									setSelected(
 										moment(day.dateString).format('DD-MM-YYYY'),
 									);
 									setDate(day.dateString);

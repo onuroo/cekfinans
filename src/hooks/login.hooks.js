@@ -7,8 +7,8 @@ import AuthRequests from '../requests/auth.requests';
 import NavigationActions from '../navigation/navigationActions';
 
 const LoginHooks = () => {
-  const [tckn, setTckn] = useState('12345678912');
-  const [password, setPassword] = useState('2020asfirinmakine');
+  const [tckn, setTckn] = useState('34343193976');
+  const [password, setPassword] = useState('123123123');
 
   const { navigatePush, openLoading, closeLoading, navigatePop, navigateReset } = NavigationActions();
   
@@ -37,10 +37,13 @@ const LoginHooks = () => {
           password,
         }
         AuthRequests.login(loginPostBody).then((response) => {
-            
-          AsyncStorage.setItem('token', JSON.stringify(response.token));
+          if (response.token){
+            AsyncStorage.setItem('token', JSON.stringify(response.token));
+            navigateReset('home');
+          }else{
+            return false;
+          }
           closeLoading();
-          navigateReset('home');
         }).catch((error) => {
           closeLoading();
         })

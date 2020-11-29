@@ -1,11 +1,13 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import {View, Dimensions, StyleSheet, TouchableOpacity} from 'react-native'
 import {Text, Header, Icon, GoBack} from '../components'
 import {SwipeListView} from 'react-native-swipe-list-view';
 import {color} from "../components/ThemeConfig";
 import ListItem from './List/ListItem.js'
 import {navigate} from "../config/navigator";
-let data = [
+import request from "../config/request";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+let list = [
 	{
 		id: 1,
 		createDate: '14/11/2020 22:17',
@@ -43,28 +45,33 @@ let data = [
 		demand: true,
 	},
 ]
-const ListScreen = () => {
+const ListScreen = (props) => {
+	let [data,setData] = useState([]);
+	useEffect(()=> {
+		let getList = async () =>  {
+			let token = await AsyncStorage.getItem('token');
+			await request.post('check/list',{token:JSON.parse(token)}).then(res => setData(res.checks)).catch(e => console.log(e));
+		}
+		getList()
+	},[])
 	return (
 		<View style={styles.container}>
 			<Header left={<GoBack/>} title={'Taleplerim'}/>
 			<View style={styles.container}>
 				<SwipeListView
 					data={data}
-					renderItem={({item: data}, rowMap) => (
-						<ListItem data={data} />
+					renderItem={( data, rowMap) => (
+						<ListItem keyExtractor={(data) => data.index.toString()} data={data.item} />
 					)}
 					renderHiddenItem={(data, rowMap) => (
-						<View keyExtractor={item => item.id.toString()} style={styles.rowBack}>
-							<TouchableOpacity onPress={()=> console.log(data.id)} style={[styles.actionsButton, styles.firstButton]}>
-								<Text medium p color={color.white} center>Tekliflere Aç</Text>
-							</TouchableOpacity>
-							<TouchableOpacity onPress={()=> navigate('listDetail',{data:data})} style={[styles.actionsButton, styles.secondButton]}>
+						<View keyExtractor={item => data.index.toString()} style={styles.rowBack}>
+							<TouchableOpacity onPress={()=> navigate('listDetail',{data:data.item})} style={[styles.actionsButton, styles.secondButton]}>
 								<Text medium p color={color.white} center>Çek Detayları</Text>
 							</TouchableOpacity>
 						</View>
 					)}
 					leftOpenValue={0}
-					rightOpenValue={-(Dimensions.get('window').width / 2)}
+					rightOpenValue={-(Dimensions.get('window').width / 2) / 2}
 				/>
 			</View>
 

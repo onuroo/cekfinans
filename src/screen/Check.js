@@ -1,17 +1,28 @@
 'use strict';
-import React, {useRef,useEffect,useState} from 'react';
-import {StyleSheet, Image, Alert, TouchableOpacity, Dimensions, View} from "react-native";
+import React, {useRef, useEffect, useState} from 'react';
+import {StyleSheet, Platform, Image, Modal, Vibration, TouchableOpacity, Dimensions, View} from "react-native";
 import {color} from "../components/ThemeConfig";
-import {Text, Button, Header, UserComponent, GoBack} from "../components";
+import {Text, Button, Header, GoBack} from "../components";
 import {RNCamera} from 'react-native-camera';
+import {navigate} from "../config/navigator";
 
 let {width: wWidth, height: wHeight} = Dimensions.get('window');
+
+
 const CheckScreen = ({navigation}) => {
     let camera = useRef(null)
     let [alert, setAlert] = useState(false)
-    setTimeout(()=>{
-        console.log('asd')
-    },5000)
+    let [cameras, setCamera] = useState(true)
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+            if (!cameras) {
+                setCamera(true)
+            }
+        });
+
+        // Return the function to unsubscribe from the event so it gets removed on unmount
+        return unsubscribe;
+    }, [navigation]);
     return (
         <View style={styles.container}>
             <Header left={<GoBack navigation={navigation}/>} title={'Talep Ekle'} description={'Yurtiçi Faktoring'}/>
@@ -40,12 +51,18 @@ const CheckScreen = ({navigation}) => {
                             buttonNegative: 'Cancel',
                         }}
                         onGoogleVisionBarcodesDetected={({barcodes}) => {
-
+                            if (barcodes[0].type !== 'UNKNOWN_FORMAT' && cameras) {
+                                Vibration.vibrate(10 * 10)
+                                setCamera(false)
+                                setTimeout(() => {
+                                    navigate('checkAdd')
+                                }, 1500)
+                            }
                         }}
                     />
                 </View>
                 <View style={{padding: 40, flex: 1, marginTop: 200,}}>
-                    <Button onPress={() => navigation.navigate('checkAdd')} variant={'primary'} color={color.white}
+                    <Button onPress={() => navigation.navigate('errorQrCode',{message:'Karekod bilgileri okunmadı.'})} variant={'primary'} color={color.white}
                             title={'Qr Kod Olmadan Devam Et'}/>
                 </View>
             </View>
