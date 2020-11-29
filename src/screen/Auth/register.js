@@ -1,10 +1,24 @@
-import React from 'react'
-import {View, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard, StyleSheet} from 'react-native'
-import {Text, Button,GoBack, Header, Logo, Input} from './../../components'
-import {color} from "../../components/ThemeConfig";
+import React, {useState, forwardRef, useImperativeHandle} from 'react'
+import {
+	View,
+	TouchableOpacity,
+	StyleSheet
+} from 'react-native'
+import {Text, Header, CheckBox, Icon, Button, Logo, Input} from './../../components'
+import {color, fontSize} from "../../components/ThemeConfig";
+import LinearGradient from 'react-native-linear-gradient';
+
 import RegisterHooks from '../../hooks/register.hooks';
 
-const Register = ({navigation}) => {
+const Register = forwardRef((props, ref) => {
+	let [registerShowPassword, setRegisterShowPassword] = useState(true);
+	let [registerShowRepeatPassword, setRegisterShowRepeatPassword] = useState(true);
+
+
+	useImperativeHandle(ref, () => ({
+		onRegister,
+	  }));
+
 	const {
 		namesurname, setNamesurname,
 		tckn, setTckn,
@@ -12,101 +26,93 @@ const Register = ({navigation}) => {
 		email, setEmail,
 		password, setPassword,
 		passwordAgain, setPasswordAgain,
+		checkKvkk, setCheckKVkk,
+		checkTerm, setCheckTerm,
 		onRegister
 	} = RegisterHooks();
+
 	return (
-		<View style={styles.container}>
-			<Header left={<GoBack navigation={navigation} />} center={<Text h4 bold center color={color.white} white> Kayıt Ol</Text>}/>
-
-			<View style={styles.content}>
-				<KeyboardAvoidingView
-					behavior={Platform.OS === "ios" ? "padding" : "height"}
-					style={styles.keyboardArea}
-				>
-					<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-						<View style={styles.inner}>
-							<View style={styles.justifyContent}>
-								<Input onChangeText={(val) => setNamesurname(val)}
-									   value={ namesurname }
-								       autoCapitalize={'none'}
-								       autoCompleteType={'off'}
-								       placeholder={'Ad Soyad'}
-								/>
-								<Input onChangeText={(val) => setTckn(val)}
-									   value={ tckn }
-								       autoCapitalize={'none'}
-								       autoCompleteType={'off'}
-								       placeholder={'T.C. Kimlik no'}
-								/>
-								<Input onChangeText={(val) => setPhone(val)}
-									   value={ phone }
-								       autoCapitalize={'none'}
-								       autoCompleteType={'off'}
-								       placeholder={'Telefon'}
-								/>
-								<Input onChangeText={(val) => setEmail(val)}
-								 	   value={ email }
-								       autoCapitalize={'none'}
-								       autoCompleteType={'off'}
-								       placeholder={'Email'}
-								/>
-								<Input onChangeText={(val) => setPassword(val)}
-								  	   value={ password }
-								       autoCapitalize={'none'}
-								       autoCompleteType={'off'}
-								       placeholder={'Şifre'}
-								/>
-								<Input onChangeText={(val) => setPasswordAgain(val)}
-									   value={ passwordAgain }
-								       autoCapitalize={'none'}
-								       autoCompleteType={'off'}
-								       placeholder={'Şifre Tekrar'}
-								/>
-							</View>
-							<View style={styles.justifyContent}>
-								<Button color={color.white} variant={'primary'} onPress={ onRegister }
-								        style={{width: 200}} title={'Kayıt Ol'}/>
-							</View>
-							<View style={[styles.justifyContent, {marginTop: 20}]}>
-								<Button color={color.primary} variant={'link'} onPress={() => navigation.goBack()}
-								        style={{width: 200}} title={'Giriş'}/>
-							</View>
-						</View>
-					</TouchableWithoutFeedback>
-				</KeyboardAvoidingView>
-			</View>
-
-
+		<View style={{flex: 0.8}}>
+		<Input onChangeText={(val) => setTckn(val) }
+			   value={ tckn }
+			   autoCapitalize={'none'}
+			   autoCompleteType={'off'}
+			   keyboardType={'numeric'}
+			   placeholder={'TCKN'}
+			   maxLength={11}
+		/>
+		<Input onChangeText={(val) => setNamesurname(val) }
+			   value={ namesurname }
+			   autoCapitalize={'none'}
+			   autoCompleteType={'off'}
+			   placeholder={'Ad Soyad'}
+		/>
+		<Input onChangeText={(val) => setPhone(val) }
+			   value={ phone }
+			   autoCapitalize={'none'}
+			   autoCompleteType={'off'}
+			   keyboardType={'numeric'}
+			   placeholder={'Telefon'}
+		/>
+		<Input onChangeText={(val) => setEmail(val) }
+			   value={ email }
+			   autoCapitalize={'none'}
+			   autoCompleteType={'off'}
+			   placeholder={'E Posta'}
+			   keyboardType={'email-address'}
+		/>
+		<Input onChangeText={(val) => setPassword}
+			   value={ password }
+			   autoCapitalize={'none'}
+			   autoCompleteType={'off'}
+			   placeholder={'Şifre'}
+			   secureTextEntry={registerShowPassword}
+			   rightIcon={
+				   <TouchableOpacity onPress={() => {
+					   setRegisterShowPassword(!registerShowPassword)
+				   }}>
+					   <Icon size={22} name={!registerShowPassword ? 'eye-off' : 'eye'} color={color.black}/>
+				   </TouchableOpacity>
+			   }
+		/>
+		<Input onChangeText={(val) => setPasswordAgain(val)}
+			   value={ passwordAgain }
+			   autoCapitalize={'none'}
+			   autoCompleteType={'off'}
+			   placeholder={'Şifre Tekrar'}
+			   secureTextEntry={registerShowRepeatPassword}
+			   rightIcon={
+				   <TouchableOpacity onPress={() => {
+					   setRegisterShowRepeatPassword(!registerShowRepeatPassword)
+				   }}>
+					   <Icon size={22} name={!registerShowRepeatPassword ? 'eye-off' : 'eye'} color={color.black}/>
+				   </TouchableOpacity>
+			   }
+		/>
+		<View style={{flexDirection: 'row', marginBottom: 10}}>
+			<TouchableOpacity onPress={() => setCheckKVkk(!checkKvkk)} style={styles.checkArea}>
+				<CheckBox value={checkKvkk}/>
+			</TouchableOpacity>
+			<TouchableOpacity onPress={() => setCheckKVkk(!checkKvkk)} style={styles.checkText}>
+				<Text style={{fontSize: 12, fontWeight: '900'}} color={color.white}> KVKK Aydınlatma metni ve açık rıza
+					sözleşmesini okudum.</Text>
+			</TouchableOpacity>
 		</View>
+		<View style={{flexDirection: 'row', marginBottom: 10}}>
+			<TouchableOpacity onPress={() => setCheckTerm(!checkTerm)} style={styles.checkArea}>
+				<CheckBox value={checkKvkk}/>
+			</TouchableOpacity>
+			<TouchableOpacity onPress={() => setCheckTerm(!checkTerm)} style={styles.checkText}>
+				<Text style={{fontSize: 12, fontWeight: '900'}} color={color.white}> Çek Finans sözleşmesini
+					okudum.</Text>
+			</TouchableOpacity>
+		</View>
+	</View>
 	)
-}
+});
+
 const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: color.white,
-	},
-	content: {
-		flex:1,
-		paddingHorizontal: 10,
-		padding:20,
-	},
-	loginHeader: {
-		flex: 0.4,
-		alignSelf: 'center',
-		alignItems: 'center',
-		alignContent: 'center',
-		justifyContent: 'center'
-	},
-	justifyContent: {
-		justifyContent: 'center'
-	},
-	keyboardArea: {
-		flex: 0.6,
-	},
-	inner: {
-		flex: 1,
-		alignContent: 'center',
-	},
+	
 })
 
 export default Register;

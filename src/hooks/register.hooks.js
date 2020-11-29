@@ -12,6 +12,8 @@ const RegisterHooks = () => {
   const [email, setEmail] = useState('info@asfirinmakine.com');
   const [password, setPassword] = useState('2020asfirinmakine');
   const [passwordAgain, setPasswordAgain] = useState('2020asfirinmakine');
+  const [checkKvkk, setCheckKVkk] = useState('2020asfirinmakine');
+  const [checkTerm, setCheckTerm] = useState('2020asfirinmakine');
 
   const { navigatePush, openLoading, closeLoading, navigatePop } = NavigationActions();
   
@@ -25,6 +27,8 @@ const RegisterHooks = () => {
       password,
       passwordAgain,
       (password && passwordAgain && password === passwordAgain),
+      checkKvkk,
+      checkTerm,
     ];
     console.log('rules.every', rules.every(i => i));
     return rules.every(i => i);
@@ -40,6 +44,8 @@ const RegisterHooks = () => {
     else if (!password) return 'Şifre bilgisi boş bırakılamaz';
     else if (!passwordAgain) return 'Şifre tekrar bilgisi boş bırakılamaz';
     else if (password !== passwordAgain) return 'Şifre ve Şifre tekrar bilgileri aynı olmalıdır!';
+    else if (checkKvkk) return 'Kvkk Aydınlatma metnini kabul etmelisiniz!';
+    else if (checkTerm) return 'Çen finans sözleşmesini kabul etmelisiniz!';
     else return null;
   }
 
@@ -94,6 +100,8 @@ const RegisterHooks = () => {
     email, setEmail,
     password, setPassword,
     passwordAgain, setPasswordAgain,
+    checkKvkk, setCheckKVkk,
+    checkTerm, setCheckTerm,
     onRegister,
     onRegisterUserControl,
   };
