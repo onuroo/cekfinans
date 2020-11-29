@@ -115,11 +115,19 @@ const App = () => {
             let userToken;
 
             try {
-                userToken = await AsyncStorage.getItem('token');
-                setState({
-                    token: JSON.parse(userToken),
-                    isReady: true,
-                });
+                userInfo = await AsyncStorage.getItem('userInfo');
+                if (userInfo) {
+                    setState({
+                        token: JSON.parse(userInfo.token),
+                        companyInfo: JSON.parse(userInfo.companyInfo),
+                        isReady: true,
+                    });
+                } else {
+                    setState({
+                        token: null,
+                        isReady: true,
+                    });
+                }
             } catch (e) {
                 // Restoring token failed
                 setState({
@@ -134,12 +142,16 @@ const App = () => {
     }, []);
 
     if (!state.isReady) return null;
+
+    let initialRouteName = null;
+    if (state.token) initialRouteName = 'home';
+    if (!state.companyInfo) initialRouteName = 'firmSettings';
     return (
         <>
             <AppStateProvider>
                 <ThemeProvider>
                     <NavigationContainer ref={navigationRef}>
-                        <Stack.Navigator initialRouteName={state.token == null ? 'login' : 'home'}
+                        <Stack.Navigator initialRouteName={ initialRouteName }
                                          headerMode="none">
                             <Stack.Screen name="splash" component={SplashScreen}/>
                             <Stack.Screen name="login" component={LoginScreen}/>

@@ -38,12 +38,18 @@ const LoginHooks = () => {
         }
         AuthRequests.login(loginPostBody).then((response) => {
           if (response.token){
-            AsyncStorage.setItem('token', JSON.stringify(response.token));
-            navigateReset('home');
+            // AsyncStorage.setItem('token', JSON.stringify(response.token));
+            AsyncStorage.setItem('userInfo', JSON.stringify(response));
+            closeLoading();
+            if (!response.companyInfo) {
+              navigatePush('firmSettings');
+            } else {
+              navigatePush('home');
+            }
           }else{
+            closeLoading();
             return false;
           }
-          closeLoading();
         }).catch((error) => {
           closeLoading();
         })
