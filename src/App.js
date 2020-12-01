@@ -118,8 +118,8 @@ const App = () => {
                 userInfo = await AsyncStorage.getItem('userInfo');
                 if (userInfo) {
                     setState({
-                        token: JSON.parse(userInfo.token),
-                        companyInfo: JSON.parse(userInfo.companyInfo),
+                        token: JSON.parse(userInfo).token,
+                        companyInfo: JSON.parse(userInfo).companyInfo,
                         isReady: true,
                     });
                 } else {

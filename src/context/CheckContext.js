@@ -56,7 +56,8 @@ const AppStateProvider = props => {
     const onSend = () => {
        return new Promise(async (resolve, reject) => {
             if (validates()) {
-                let token = await AsyncStorage.getItem('token');
+                let userInfo = await AsyncStorage.getItem('userInfo');
+                const { token } = userInfo;
                 let date = moment(cekDate,'DD-MM-YYYY').format('YYYY-MM-DD')
                 let params = new FormData();
                 params.append('token',JSON.parse(token));

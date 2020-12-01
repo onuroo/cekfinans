@@ -88,7 +88,7 @@ const RegisterHooks = () => {
           if (!response.companyInfo) {
             navigatePush('firmSettings');
           } else {
-            navigatePush('home');
+            navigateReset('home');
           }
         })
         .catch((error) => {

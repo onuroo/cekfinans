@@ -44,7 +44,7 @@ const LoginHooks = () => {
             if (!response.companyInfo) {
               navigatePush('firmSettings');
             } else {
-              navigatePush('home');
+              navigateReset('home')
             }
           }else{
             closeLoading();

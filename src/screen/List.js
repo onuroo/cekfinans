@@ -49,8 +49,8 @@ const ListScreen = (props) => {
 	let [data,setData] = useState([]);
 	useEffect(()=> {
 		let getList = async () =>  {
-			let token = await AsyncStorage.getItem('token');
-			await request.post('check/list',{token:JSON.parse(token)}).then(res => setData(res.checks)).catch(e => console.log(e));
+			let userInfo = await AsyncStorage.getItem('userInfo');
+			await request.post('check/list',{token:JSON.parse(userInfo).token}).then(res => setData(res.checks)).catch(e => console.log(e));
 		}
 		getList()
 	},[])

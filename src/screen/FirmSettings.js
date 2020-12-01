@@ -1,37 +1,43 @@
 import React, {useState, useEffect} from 'react'
 import {View, StyleSheet, ScrollView} from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Text, Button, Header, Selected, Input, GoBack} from '../components'
 import {color} from "../components/ThemeConfig";
 import request from "../config/request";
 
 
+import FirmHooks from '../hooks/firm.hooks';
+
 const FirmSettingsScreen = () => {
     let textColor = color.gradientEnd2;
-    let [city, setCity] = useState([]);
-    let [district, setDistrict] = useState([]);
-    let [selectedCity, setSelectedCity] = useState(null);
-    let [selectedDistrict, setSelectedDistrict] = useState(null);
-    useEffect(() => {
-        async function fetchData() {
-            await request.post('common/cities').then(res => {
-                setCity(res.cities)
-            })
-        }
-        fetchData();
 
-    },[])
-    useEffect(() => {
-        async function fetchData() {
-            setSelectedDistrict(null)
-            setDistrict([])
-            await request.post('common/district',{id:selectedCity.id}).then(res => {
-                setDistrict(res.district)
-            })
-        }
-        if (selectedCity){
-            fetchData();
-        }
-    },[selectedCity])
+    const {
+        handleFormInputs,
+        getFormItem,
+        getCities,
+        setSelectedCity,
+        setSelectedDistrict,
+        setSelectedNeighborhood,
+        cities,
+        districts,
+        neighborhoods,
+        onSubmit,
+    } = FirmHooks();
+
+
+    
+    
+    useEffect(async () => {
+        getCities();
+        AsyncStorage.getItem('userInfo').then((resp) => {
+            console.log('token resp', resp);
+            if (userInfo) {
+                handleFormInputs('token', JSON.parse(userInfo).token)
+            }
+        });
+
+    }, []);
+   
     return (
         <View style={styles.container}>
             <Header left={<GoBack/>} title={'İşletme Ayarları'}/>
@@ -39,28 +45,28 @@ const FirmSettingsScreen = () => {
                 <ScrollView contentContainerStyle={{paddingBottom: 40,}}>
                     <View style={styles.row}>
                         <Text color={color.secondary} h6>SEKTÖR</Text>
-                        <Input style={styles.input}/>
+                        <Input onChangeText={ (val) => handleFormInputs('sector', val) } style={styles.input}/>
                         <View style={styles.hr}/>
                     </View>
                     <View style={styles.row}>
                         <Text color={color.secondary} h6>FİRMA VKN</Text>
-                        <Input keyboardType={'number-pad'} maxLength={10} textColor={textColor} style={styles.input}/>
+                        <Input onChangeText={ (val) => handleFormInputs('company_vkn', val) } keyboardType={'number-pad'} maxLength={10} textColor={textColor} style={styles.input}/>
                         <View style={styles.hr}/>
                     </View>
                     <View style={styles.row}>
                         <Text color={color.secondary} h6>FİRMA ÜNVANI</Text>
-                        <Input textColor={textColor} style={styles.input}/>
+                        <Input onChangeText={ (val) => handleFormInputs('company_title', val) } textColor={textColor} style={styles.input}/>
                         <View style={styles.hr}/>
                     </View>
                     <View style={styles.row}>
                         <Text color={color.secondary} h6>VERGİ DAİRESİ</Text>
-                        <Input textColor={textColor} style={styles.input}/>
+                        <Input onChangeText={ (val) => handleFormInputs('company_tax_office', val) } textColor={textColor} style={styles.input}/>
                         <View style={styles.hr}/>
                     </View>
                     <View style={[styles.row, {flexDirection: 'row', alignItems: 'center', alignContent: 'center'}]}>
                         <Text color={color.secondary} h6
                               style={{padding: 10, marginBottom: 0, justifyContent: 'center'}}>+90</Text>
-                        <Input keyboardType={'number-pad'} maxLength={10} textColor={textColor}
+                        <Input onChangeText={ (val) => handleFormInputs('company_phone', val) } keyboardType={'number-pad'} maxLength={10} textColor={textColor}
                                style={[styles.input, {
                                    width: '80%',
                                    fontSize: 16,
@@ -75,12 +81,12 @@ const FirmSettingsScreen = () => {
                     </View>
                     <View style={styles.row}>
                         <Text color={color.secondary} h6>E POSTA ADRESİ</Text>
-                        <Input keyboardType={'email-address'} maxLength={10} style={styles.input}/>
+                        <Input onChangeText={ (val) => handleFormInputs('email', val) } keyboardType={'email-address'} style={styles.input}/>
                         <View style={styles.hr}/>
                     </View>
                     <View style={styles.row}>
                         <Text color={color.secondary} h6>WEBSİTE</Text>
-                        <Input style={styles.input}/>
+                        <Input onChangeText={ (val) => handleFormInputs('company_website', val) } style={styles.input}/>
                         <View style={styles.hr}/>
                     </View>
                     <View style={styles.row}>
@@ -88,28 +94,46 @@ const FirmSettingsScreen = () => {
                             <Text h5 color={color.gradientEnd}>Firma Adres: </Text>
                         </View>
                         <View style={styles.row}>
-                            <Selected selected={selectedCity} setSelected={setSelectedCity} type={'city'} placeholder={'Şehir Seç'} data={city}/>
+                            <Selected
+                              selected={getFormItem('company_address_city')}
+                              setSelected={setSelectedCity}
+                              type={'city'}
+                              placeholder={'Şehir Seç'}
+                              data={cities}
+                            />
                         </View>
                         <View style={styles.row}>
-                            <Selected selected={selectedDistrict} setSelected={setSelectedDistrict} type={'district'} placeholder={'İlçe Seç'} data={district}/>
+                            <Selected
+                              selected={getFormItem('company_address_district')}
+                              setSelected={setSelectedDistrict}
+                              type={'district'}
+                              placeholder={'İlçe Seç'}
+                              data={districts}
+                            />
                         </View>
                         <View style={styles.row}>
-                            <Selected placeholder={'Mahalle Seç'} data={city}/>
+                            <Selected
+                              selected={getFormItem('company_address_neighborhood')}
+                              setSelected={setSelectedNeighborhood}
+                              type={'neighborhood'}
+                              placeholder={'Mahalle Seç'}
+                              data={neighborhoods}
+                            />
                         </View>
                     </View>
                     <View style={styles.row}>
                         <Text color={color.secondary} h6>CADDE/SOKAK</Text>
-                        <Input style={styles.input}/>
+                        <Input onChangeText={ (val) => handleFormInputs('company_address_street', val) } style={styles.input}/>
                         <View style={styles.hr}/>
                     </View>
                     <View style={styles.row}>
                         <Text color={color.secondary} h6>KAPI NO</Text>
-                        <Input style={styles.input}/>
+                        <Input onChangeText={ (val) => handleFormInputs('company_address_door_no', val) } style={styles.input}/>
                         <View style={styles.hr}/>
                     </View>
                     <View style={styles.row}>
                         <Text color={color.secondary} h6>DAİRE NO</Text>
-                        <Input style={styles.input}/>
+                        <Input onChangeText={ (val) => handleFormInputs('company_address_apartment_no', val) } style={styles.input}/>
                         <View style={styles.hr}/>
                     </View>
                     <View style={styles.row}>
@@ -118,8 +142,18 @@ const FirmSettingsScreen = () => {
                         </View>
                     </View>
                     <View style={styles.row}>
+                        <Text color={color.secondary} h6>ÜNVAN</Text>
+                        <Input onChangeText={ (val) => handleFormInputs('company_official_title', val) } style={styles.input}/>
+                        <View style={styles.hr}/>
+                    </View>
+                    {/* <View style={styles.row}>
+                        <View>
+                            <Text h5 color={color.gradientEnd}>Firma Yetkilisi: </Text>
+                        </View>
+                    </View>
+                     <View style={styles.row}>
                         <Text color={color.secondary} h6>TCKN</Text>
-                        <Input keyboardType={'number-pad'} maxLength={11} style={styles.input}/>
+                        <Input  keyboardType={'number-pad'} maxLength={11} style={styles.input}/>
                         <View style={styles.hr}/>
                     </View>
                     <View style={styles.row}>
@@ -149,10 +183,10 @@ const FirmSettingsScreen = () => {
                         <Text color={color.secondary} h6>ÜNVAN</Text>
                         <Input style={styles.input}/>
                         <View style={styles.hr}/>
-                    </View>
+                    </View> */}
                     <View style={styles.row}>
                         <Button variant={'primary'} color={color.white} title={'Gönder'}
-                                onPress={() => console.log('press')}/>
+                                onPress={ onSubmit }/>
                     </View>
                 </ScrollView>
 

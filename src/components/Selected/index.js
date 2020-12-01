@@ -50,7 +50,11 @@ const Selected = ({placeholder, selected, setSelected, style, type, data}) => {
                            style={{flex: 1, height: 40, fontSize: 15, backgroundColor: 'transparent'}}
                            value={searchText} onChangeText={text => setSearch(text)}/>
                 </View>
-                <RenderItem data={data} searchText={searchText}  select={select} setSelected={setSelected}/>
+                <RenderItem data={data} searchText={searchText}  select={select} setSelected={(val) => {
+                    console.log('valval', val);
+                    setVisible(!visible);
+                    setSelected(val);
+                }}/>
             </Modal>
         </View>
     )
