@@ -145,7 +145,8 @@ const App = () => {
 
     let initialRouteName = null;
     if (state.token) initialRouteName = 'home';
-    if (!state.companyInfo) initialRouteName = 'firmSettings';
+    else initialRouteName = 'login';
+    if (!state.companyInfo && state.token) initialRouteName = 'firmSettings';
     return (
         <>
             <AppStateProvider>

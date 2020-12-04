@@ -8,7 +8,7 @@ import NavigationActions from '../navigation/navigationActions';
 
 const LoginHooks = () => {
   const [tckn, setTckn] = useState('34343193976');
-  const [password, setPassword] = useState('123123123');
+  const [password, setPassword] = useState('2020asfirinmakine');
 
   const { navigatePush, openLoading, closeLoading, navigatePop, navigateReset } = NavigationActions();
   
@@ -29,7 +29,9 @@ const LoginHooks = () => {
   }
 
   const onLogin = () => {
+    console.log('232323232')
     if (isValidated()) {
+      console.log('8989898989898')
       return new Promise((resolve, reject) => {
         openLoading();
         const loginPostBody = {
@@ -37,6 +39,7 @@ const LoginHooks = () => {
           password,
         }
         AuthRequests.login(loginPostBody).then((response) => {
+          console.log('responseresponse', response);
           if (response.token){
             // AsyncStorage.setItem('token', JSON.stringify(response.token));
             AsyncStorage.setItem('userInfo', JSON.stringify(response));
@@ -51,10 +54,12 @@ const LoginHooks = () => {
             return false;
           }
         }).catch((error) => {
+          console.log('errorerror', error);
           closeLoading();
         })
       })
     } else {
+      console.log('5555555');
       navigatePush('errorModal', { message: getValidationError() });
     }
   }

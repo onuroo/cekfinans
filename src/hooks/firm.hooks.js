@@ -189,6 +189,8 @@ const FirmHooks = () => {
         }).catch((error) => {
             console.log('hook error', error);
             closeLoading();
+            const { message } = error;
+            navigatePush('errorModal', { message });
         });
     } else {
         navigatePush('errorModal', { message: getValidationError() });
