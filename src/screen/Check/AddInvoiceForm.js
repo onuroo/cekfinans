@@ -4,8 +4,10 @@ import {Button, GoBack, Header, Icon, Text} from '../../components'
 import {color} from "../../components/ThemeConfig";
 import {AppStateContext} from "../../context/CheckContext";
 import ImagePicker from "react-native-image-picker";
-import {navigate, navigationRef} from "../../config/navigator";
+import NavigationActions from '../../navigation/navigationActions';
+
 const AddInvoiceForm = () => {
+    const { navigatePop, navigatePush } = NavigationActions();
     const {exFaturaInfo, setExFaturaInfo,extraDataGoBack} = useContext(AppStateContext)
     const picker = async (setState) => {
         const options = {
@@ -61,7 +63,7 @@ const AddInvoiceForm = () => {
                 <Button style={{flex: 1, width: '100%'}} color={color.white}
                         onPress={() => {
                             extraDataGoBack()
-                            navigationRef.current.goBack()
+                            navigatePop();
                         }}
                         title={'Devam'}/>
             </View>

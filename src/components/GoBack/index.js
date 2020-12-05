@@ -3,11 +3,12 @@ import {View,TouchableOpacity, StyleSheet} from 'react-native'
 import {Text} from '../index';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
 import {color} from "../ThemeConfig";
-import {navigationRef} from '../../config/navigator'
+import NavigationActions from '../../navigation/navigationActions';
 const GoBack = () => {
+	const { navigatePop } = NavigationActions();
 	return (
 		<View>
-			<TouchableOpacity style={styles.container} onPress={() => navigationRef.current.goBack()}>
+			<TouchableOpacity style={styles.container} onPress={ () => navigatePop() }>
 				<Icon name="angle-left" size={30} color={color.white} />
 			</TouchableOpacity>
 		</View>

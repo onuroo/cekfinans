@@ -32,7 +32,6 @@ import ListScreen from './screen/List';
 import ListDetailScreen from './screen/ListDetail';
 import FirmSettingsScreen from './screen/FirmSettings';
 import Tabs from './components/Tab'
-import {navigationRef} from "./config/navigator";
 import CheckAddScreen from "./screen/CheckAdd";
 import CheckForm from "./screen/Check/checkForm";
 import AddInvoiceForm from "./screen/Check/AddInvoiceForm";
@@ -73,7 +72,7 @@ function CustomDrawerContent(props) {
                 <View style={{marginVertical: 100}}>
                     <TouchableOpacity
                         style={{width: '100%', flexDirection: 'row', alignItems: 'center', paddingLeft: 10}}
-                        onPress={() => AsyncStorage.removeItem('token')}>
+                        onPress={() => AsyncStorage.removeItem('userInfo')}>
                         <Icon size={22} color={color.black} name={'log-out'}/>
                         <Text left h5> Çıkış Yap </Text>
                     </TouchableOpacity>
@@ -100,6 +99,9 @@ function TabScreen() {
     return (
         <Tab.Navigator
             initialRouteName={'home'}
+            unmountInactiveScreens
+            headerMode="none"
+            lazy={ false }
             tabBar={(props) => <Tabs {...props} />}>
             <Tab.Screen name="home" component={HomeScreen}/>
             <Tab.Screen name="Check" component={CheckScreen}/>
@@ -147,36 +149,40 @@ const App = () => {
     if (state.token) initialRouteName = 'home';
     else initialRouteName = 'login';
     if (!state.companyInfo && state.token) initialRouteName = 'firmSettings';
+
+    const options = {
+        headerShown: false,
+        tabBarVisible: false,
+      };
+
     return (
-        <>
-            <AppStateProvider>
-                <ThemeProvider>
-                    <NavigationContainer ref={navigationRef}>
-                        <Stack.Navigator initialRouteName={ initialRouteName }
-                                         headerMode="none">
-                            <Stack.Screen name="splash" component={SplashScreen}/>
-                            <Stack.Screen name="login" component={LoginScreen}/>
-                            <Stack.Screen name="register" component={RegisterScreen}/>
-                            <Stack.Screen name="forgot" component={ForgotScreen}/>
-                            <Stack.Screen name="home" component={DrawerScreens}/>
-                            <Stack.Screen name="checkAdd" component={CheckAddScreen}/>
-                            <Stack.Screen name="checkForm" component={CheckForm}/>
-                            <Stack.Screen name="list" component={ListScreen}/>
-                            <Stack.Screen name="listDetail" component={ListDetailScreen}/>
-                            <Stack.Screen name="firmSettings" component={FirmSettingsScreen}/>
-                            <Stack.Screen name="errorModal" component={ErrorModal} options={{...ModalTransition}}/>
-                            <Stack.Screen name="errorQrCode" component={ErrorQrCode} options={{...ModalTransition}}/>
-                            <Stack.Screen name="successModal" component={SuccessModal} options={{...ModalTransition}}/>
-                            <Stack.Screen name="addInvoice" component={AddInvoice} options={{...ModalTransition}}/>
-                            <Stack.Screen name="addInvoiceForm" component={AddInvoiceForm}/>
-                            <Stack.Screen name="loading" component={LoadingModal} options={{...ModalTransition}}/>
-                            <Stack.Screen name="codeVerify" component={CodeVerify}/>
-                            <Stack.Screen name="PasswordChange" component={PasswordChangeScreen}/>
-                        </Stack.Navigator>
-                    </NavigationContainer>
-                </ThemeProvider>
-            </AppStateProvider>
-        </>
+        <ThemeProvider>
+            <NavigationContainer>
+                <AppStateProvider>
+                    <Stack.Navigator initialRouteName={ initialRouteName }
+                                        headerMode="none">
+                        <Stack.Screen name="splash" component={SplashScreen} options={ { ...options } }/>
+                        <Stack.Screen name="login" component={LoginScreen} options={ { ...options } }/>
+                        <Stack.Screen name="register" component={RegisterScreen}options={ { ...options } }/>
+                        <Stack.Screen name="forgot" component={ForgotScreen}options={ { ...options } }/>
+                        <Stack.Screen name="home" component={DrawerScreens}options={ { ...options } }/>
+                        <Stack.Screen name="checkAdd" component={CheckAddScreen}options={ { ...options } }/>
+                        <Stack.Screen name="checkForm" component={CheckForm}options={ { ...options } }/>
+                        <Stack.Screen name="list" component={ListScreen}options={ { ...options } }/>
+                        <Stack.Screen name="listDetail" component={ListDetailScreen}options={ { ...options } }/>
+                        <Stack.Screen name="firmSettings" component={FirmSettingsScreen}options={ { ...options } }/>
+                        <Stack.Screen name="errorModal" component={ErrorModal} options={{...ModalTransition}}options={ { ...options } }/>
+                        <Stack.Screen name="errorQrCode" component={ErrorQrCode} options={{...ModalTransition}}options={ { ...options } }/>
+                        <Stack.Screen name="successModal" component={SuccessModal} options={{...ModalTransition}}options={ { ...options } }/>
+                        <Stack.Screen name="addInvoice" component={AddInvoice} options={{...ModalTransition}}options={ { ...options } }/>
+                        <Stack.Screen name="addInvoiceForm" component={AddInvoiceForm}options={ { ...options } }/>
+                        <Stack.Screen name="loading" component={LoadingModal} options={{...ModalTransition}}options={ { ...options } }/>
+                        <Stack.Screen name="codeVerify" component={CodeVerify}options={ { ...options } }/>
+                        <Stack.Screen name="PasswordChange" component={PasswordChangeScreen}options={ { ...options } }/>
+                    </Stack.Navigator>
+                </AppStateProvider>
+            </NavigationContainer>
+        </ThemeProvider>
     );
 };
 

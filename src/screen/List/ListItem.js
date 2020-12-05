@@ -3,9 +3,10 @@ import {View, StyleSheet,TouchableOpacity} from 'react-native'
 import {color} from "../../components/ThemeConfig";
 import {Icon, Text} from "../../components";
 import moment from "moment";
-import {navigate} from "../../config/navigator";
+import NavigationActions from '../../navigation/navigationActions';
 
 const ListItem = ({data}) => {
+    const { navigatePush } = NavigationActions();
     return (
         <View
             style={[styles.rowFront]}>
@@ -28,7 +29,7 @@ const ListItem = ({data}) => {
                 </View>
             </View>
             <View style={{flexDirection: 'row'}}>
-                <TouchableOpacity onPress={()=> navigate('listDetail',{data:data})} style={styles.bottom}>
+                <TouchableOpacity onPress={()=> navigatePush('listDetail',{data:data})} style={styles.bottom}>
                     <Text center h6 color={color.white}> Çek Detay</Text>
                     <Icon size={22} color={color.white} name={'chevron-right'}/>
                 </TouchableOpacity>

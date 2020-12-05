@@ -5,6 +5,7 @@ import {Text, Button, Header, Selected, Input, GoBack} from '../components'
 import {color} from "../components/ThemeConfig";
 import request from "../config/request";
 
+import NavigationActions from '../navigation/navigationActions';
 
 import FirmHooks from '../hooks/firm.hooks';
 
@@ -27,11 +28,10 @@ const FirmSettingsScreen = () => {
         updateCompanyDetail,
     } = FirmHooks();
     
-    useEffect(async () => {
+    useEffect(() => {
         getCompanyDetail();
         getCities();
         AsyncStorage.getItem('userInfo').then((resp) => {
-            console.log('token resp', resp);
             if (userInfo) {
                 handleFormInputs('token', JSON.parse(userInfo).token)
             }

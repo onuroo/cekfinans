@@ -4,7 +4,7 @@ import {Header, Button, Date, Input, Selected, GoBack} from "../../components";
 import {color} from "../../components/ThemeConfig";
 import CheckHooks from '../../hooks/check.hooks';
 import {AppStateContext} from "../../context/CheckContext";
-import {navigate} from "../../config/navigator";
+import NavigationActions from '../../navigation/navigationActions';
 
 const CheckForm = ({route}) => {
     const {
@@ -16,14 +16,16 @@ const CheckForm = ({route}) => {
         setFtKonu, ftKonu,
         setftPrice, ftPrice,
         setftVKN, ftVKN, addInvoiceModal
-    } = useContext(AppStateContext)
+    } = useContext(AppStateContext);
+
+    const { navigatePush } = NavigationActions();
 
     const onGoCheck = () => {
 
         if (parseInt(cekPrice) > parseInt(ftPrice)) {
-            navigate('addInvoice', {message: 'Çek tutarı fatura tutarından fazla olamaz. Varsa ek faturanızı ekleyin.'})
+            navigatePush('addInvoice', {message: 'Çek tutarı fatura tutarından fazla olamaz. Varsa ek faturanızı ekleyin.'})
         } else{
-            onSend().then(res => console.log('asdas Tamamdır!')).catch(e=> navigate('errorModal', {message: e.message}));
+            onSend().then(res => console.log('asdas Tamamdır!')).catch(e=> navigatePush('errorModal', {message: e.message}));
 
         }
     }

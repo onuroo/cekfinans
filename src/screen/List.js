@@ -4,7 +4,8 @@ import {Text, Header, Icon, GoBack} from '../components'
 import {SwipeListView} from 'react-native-swipe-list-view';
 import {color} from "../components/ThemeConfig";
 import ListItem from './List/ListItem.js'
-import {navigate} from "../config/navigator";
+import NavigationActions from '../navigation/navigationActions';
+
 import request from "../config/request";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 let list = [
@@ -47,6 +48,8 @@ let list = [
 ]
 const ListScreen = (props) => {
 	let [data,setData] = useState([]);
+
+	const { navigatePush } = NavigationActions();
 	useEffect(()=> {
 		let getList = async () =>  {
 			let userInfo = await AsyncStorage.getItem('userInfo');
@@ -65,7 +68,7 @@ const ListScreen = (props) => {
 					)}
 					renderHiddenItem={(data, rowMap) => (
 						<View keyExtractor={item => data.index.toString()} style={styles.rowBack}>
-							<TouchableOpacity onPress={()=> navigate('listDetail',{data:data.item})} style={[styles.actionsButton, styles.secondButton]}>
+							<TouchableOpacity onPress={()=> navigatePush('listDetail',{data:data.item})} style={[styles.actionsButton, styles.secondButton]}>
 								<Text medium p color={color.white} center>Çek Detayları</Text>
 							</TouchableOpacity>
 						</View>
