@@ -12,6 +12,7 @@ const FirmSettingsScreen = () => {
     let textColor = color.gradientEnd2;
 
     const {
+        isUpdate,
         handleFormInputs,
         getFormItem,
         getCities,
@@ -21,13 +22,13 @@ const FirmSettingsScreen = () => {
         cities,
         districts,
         neighborhoods,
-        onSubmit,
+        companyRegister,
+        getCompanyDetail,
+        updateCompanyDetail,
     } = FirmHooks();
-
-
-    
     
     useEffect(async () => {
+        getCompanyDetail();
         getCities();
         AsyncStorage.getItem('userInfo').then((resp) => {
             console.log('token resp', resp);
@@ -45,28 +46,28 @@ const FirmSettingsScreen = () => {
                 <ScrollView contentContainerStyle={{paddingBottom: 40,}}>
                     <View style={styles.row}>
                         <Text color={color.secondary} h6>SEKTÖR</Text>
-                        <Input onChangeText={ (val) => handleFormInputs('sector', val) } style={styles.input}/>
+                        <Input value={ getFormItem("sector") } onChangeText={ (val) => handleFormInputs('sector', val) } style={styles.input}/>
                         <View style={styles.hr}/>
                     </View>
                     <View style={styles.row}>
                         <Text color={color.secondary} h6>FİRMA VKN</Text>
-                        <Input onChangeText={ (val) => handleFormInputs('company_vkn', val) } keyboardType={'number-pad'} maxLength={10} textColor={textColor} style={styles.input}/>
+                        <Input value={ getFormItem("company_vkn") } onChangeText={ (val) => handleFormInputs('company_vkn', val) } keyboardType={'number-pad'} maxLength={10} textColor={textColor} style={styles.input}/>
                         <View style={styles.hr}/>
                     </View>
                     <View style={styles.row}>
                         <Text color={color.secondary} h6>FİRMA ÜNVANI</Text>
-                        <Input onChangeText={ (val) => handleFormInputs('company_title', val) } textColor={textColor} style={styles.input}/>
+                        <Input value={ getFormItem("company_title") } onChangeText={ (val) => handleFormInputs('company_title', val) } textColor={textColor} style={styles.input}/>
                         <View style={styles.hr}/>
                     </View>
                     <View style={styles.row}>
                         <Text color={color.secondary} h6>VERGİ DAİRESİ</Text>
-                        <Input onChangeText={ (val) => handleFormInputs('company_tax_office', val) } textColor={textColor} style={styles.input}/>
+                        <Input value={ getFormItem("company_tax_office") } onChangeText={ (val) => handleFormInputs('company_tax_office', val) } textColor={textColor} style={styles.input}/>
                         <View style={styles.hr}/>
                     </View>
                     <View style={[styles.row, {flexDirection: 'row', alignItems: 'center', alignContent: 'center'}]}>
                         <Text color={color.secondary} h6
                               style={{padding: 10, marginBottom: 0, justifyContent: 'center'}}>+90</Text>
-                        <Input onChangeText={ (val) => handleFormInputs('company_phone', val) } keyboardType={'number-pad'} maxLength={10} textColor={textColor}
+                        <Input value={ getFormItem("company_phone") } onChangeText={ (val) => handleFormInputs('company_phone', val) } keyboardType={'number-pad'} maxLength={10} textColor={textColor}
                                style={[styles.input, {
                                    width: '80%',
                                    fontSize: 16,
@@ -81,12 +82,12 @@ const FirmSettingsScreen = () => {
                     </View>
                     <View style={styles.row}>
                         <Text color={color.secondary} h6>E POSTA ADRESİ</Text>
-                        <Input onChangeText={ (val) => handleFormInputs('email', val) } keyboardType={'email-address'} style={styles.input}/>
+                        <Input value={ getFormItem("email") } onChangeText={ (val) => handleFormInputs('email', val) } keyboardType={'email-address'} style={styles.input}/>
                         <View style={styles.hr}/>
                     </View>
                     <View style={styles.row}>
                         <Text color={color.secondary} h6>WEBSİTE</Text>
-                        <Input onChangeText={ (val) => handleFormInputs('company_website', val) } style={styles.input}/>
+                        <Input value={ getFormItem("company_website") } onChangeText={ (val) => handleFormInputs('company_website', val) } style={styles.input}/>
                         <View style={styles.hr}/>
                     </View>
                     <View style={styles.row}>
@@ -95,7 +96,7 @@ const FirmSettingsScreen = () => {
                         </View>
                         <View style={styles.row}>
                             <Selected
-                              selected={getFormItem('company_address_city')}
+                              selected={JSON.parse(getFormItem('company_address_city'))}
                               setSelected={setSelectedCity}
                               type={'city'}
                               placeholder={'Şehir Seç'}
@@ -104,7 +105,7 @@ const FirmSettingsScreen = () => {
                         </View>
                         <View style={styles.row}>
                             <Selected
-                              selected={getFormItem('company_address_district')}
+                              selected={JSON.parse(getFormItem('company_address_district'))}
                               setSelected={setSelectedDistrict}
                               type={'district'}
                               placeholder={'İlçe Seç'}
@@ -113,7 +114,7 @@ const FirmSettingsScreen = () => {
                         </View>
                         <View style={styles.row}>
                             <Selected
-                              selected={getFormItem('company_address_neighborhood')}
+                              selected={JSON.parse(getFormItem('company_address_neighborhood'))}
                               setSelected={setSelectedNeighborhood}
                               type={'neighborhood'}
                               placeholder={'Mahalle Seç'}
@@ -123,17 +124,17 @@ const FirmSettingsScreen = () => {
                     </View>
                     <View style={styles.row}>
                         <Text color={color.secondary} h6>CADDE/SOKAK</Text>
-                        <Input onChangeText={ (val) => handleFormInputs('company_address_street', val) } style={styles.input}/>
+                        <Input value={ getFormItem('company_address_street') } onChangeText={ (val) => handleFormInputs('company_address_street', val) } style={styles.input}/>
                         <View style={styles.hr}/>
                     </View>
                     <View style={styles.row}>
                         <Text color={color.secondary} h6>KAPI NO</Text>
-                        <Input onChangeText={ (val) => handleFormInputs('company_address_door_no', val) } style={styles.input}/>
+                        <Input value={ getFormItem('company_address_door_no') } onChangeText={ (val) => handleFormInputs('company_address_door_no', val) } style={styles.input}/>
                         <View style={styles.hr}/>
                     </View>
                     <View style={styles.row}>
                         <Text color={color.secondary} h6>DAİRE NO</Text>
-                        <Input onChangeText={ (val) => handleFormInputs('company_address_apartment_no', val) } style={styles.input}/>
+                        <Input value={ getFormItem('company_address_apartment_no') } onChangeText={ (val) => handleFormInputs('company_address_apartment_no', val) } style={styles.input}/>
                         <View style={styles.hr}/>
                     </View>
                     <View style={styles.row}>
@@ -143,7 +144,7 @@ const FirmSettingsScreen = () => {
                     </View>
                     <View style={styles.row}>
                         <Text color={color.secondary} h6>ÜNVAN</Text>
-                        <Input onChangeText={ (val) => handleFormInputs('company_official_title', val) } style={styles.input}/>
+                        <Input value={ getFormItem('company_official_title') } onChangeText={ (val) => handleFormInputs('company_official_title', val) } style={styles.input}/>
                         <View style={styles.hr}/>
                     </View>
                     {/* <View style={styles.row}>
@@ -186,7 +187,7 @@ const FirmSettingsScreen = () => {
                     </View> */}
                     <View style={styles.row}>
                         <Button variant={'primary'} color={color.white} title={'Gönder'}
-                                onPress={ onSubmit }/>
+                            onPress={ isUpdate ? updateCompanyDetail : companyRegister }/>
                     </View>
                 </ScrollView>
 

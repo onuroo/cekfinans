@@ -29,6 +29,7 @@ const FirmHooks = () => {
   const [cities, setCities] = useState([]);
   const [districts, setDistricts] = useState([]);
   const [neighborhoods, setNeighborhoods] = useState([]);
+  const [isUpdate, setIsUpdate] = useState(false);
 
   const [form, setForm] = useState({
     token: null,
@@ -173,7 +174,7 @@ const FirmHooks = () => {
   }
 
 
-  const onSubmit = () => {
+  const companyRegister = () => {
     console.log('form', form);
     console.log('isValidated()', isValidated());
     if (isValidated()) {
@@ -184,6 +185,14 @@ const FirmHooks = () => {
         };
         FirmRequests.companyRegister(postBody).then((response) => {
             console.log('hook response', response);
+            AsyncStorage.getItem('userInfo').then((userInfo) => {
+              if (userInfo) {
+                const new_info = {...JSON.parse(userInfo), companyInfo: true };
+                AsyncStorage.setItem('userInfo', JSON.stringify(new_info));
+                global.token = JSON.parse(userInfo).token;
+              }
+            });
+
             closeLoading();
             navigateReset('home');
         }).catch((error) => {
@@ -197,7 +206,55 @@ const FirmHooks = () => {
     }
   }
 
+  const getCompanyDetail = () => {
+    const { token } = global;
+    const postBody = {
+      token,
+    };
+    FirmRequests.companyDetail(postBody).then((response) => {
+      console.log('companyDetail response', response);
+      if (response) {
+        const { company } = response;
+        if (company && company.length > 0) {
+            const object = company[0];
+            const form_object = {}
+            Object.keys(object).forEach((key) => {
+              console.log('company[key]', object[key], key);
+              if (object[key]) {
+                form_object[key] = object[key].toString();
+              } else form_object[key] = null;
+            })
+            console.log('form_object', form_object);
+            setForm({...form, ...form_object, token});
+            setIsUpdate(true);
+        }
+      }
+    }).catch((error) => {
+      console.log('companyDetail error', error);
+    });
+  };
+  
+  const updateCompanyDetail = () => {
+    if (isValidated()) {
+      openLoading();
+      console.log('updateCompanyDetail form', form);
+      FirmRequests.updateCompanyDetail(form).then((response) => {
+        const { message } = response;
+        closeLoading();
+        navigatePush('successModal', { message });
+        console.log('updateCompanyDetail response', response);
+      }).catch((error) => {
+        closeLoading();
+        console.log('updateCompanyDetail error', error);
+      });
+    } else {
+      navigatePush('errorModal', { message: getValidationError() });
+    }
+    
+  }
+
   return {
+    isUpdate,
     handleFormInputs,
     getFormItem,
     getCities,
@@ -207,7 +264,9 @@ const FirmHooks = () => {
     cities,
     districts,
     neighborhoods,
-    onSubmit
+    companyRegister,
+    getCompanyDetail,
+    updateCompanyDetail,
   };
 };
 

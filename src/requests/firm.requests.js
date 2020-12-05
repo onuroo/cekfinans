@@ -13,7 +13,31 @@ class FirmRequests {
   
     });
   }
+  companyDetail(postBody) {
+    return new Promise((resolve, reject) => {
+        request.post('company/detail', postBody).then((response) => {
+            console.log('company/detail response', response);
+            resolve(response);
+        }).catch((error) => {
+            console.log('company/detail error', error);
+            reject(error);
+        });
+  
+    });
+  }
 
+  updateCompanyDetail(postBody) {
+    return new Promise((resolve, reject) => {
+        request.post('company/update', postBody).then((response) => {
+            console.log('company/update response', response);
+            resolve(response);
+        }).catch((error) => {
+            console.log('company/update error', error);
+            reject(error);
+        });
+  
+    });
+  }
 }
 
 const firmRequests = new FirmRequests();

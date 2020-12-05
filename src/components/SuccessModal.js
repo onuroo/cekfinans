@@ -19,7 +19,7 @@ const SuccessModal = ({ navigation, route }) => {
 
     console.log('navigation, route', navigation, route);
 
-    const { message } = route;
+    const { message } = route.params;
 
     return (
         <View style={ styles.modalContainer }>
