@@ -14,7 +14,10 @@ const CheckAddScreen = ({navigation}) => {
     /*const  {chekFatura,setCheckFatura,chekArka,chekOn,setCheckArka,setCheckOn} =  CheckHooks();*/
     const picker = async (setState) => {
         const options = {
-            title: '',
+            title: 'Görsel Seç',
+            takePhotoButtonTitle: 'Fotoğraf Çek',
+            chooseFromLibraryButtonTitle: 'Galeriden Seç',
+            cancelButtonTitle: 'İptal',
             quality: 0.5,
             type: 'image/jpeg',
             maxWidth: 500,

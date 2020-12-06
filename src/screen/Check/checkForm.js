@@ -7,7 +7,7 @@ import {AppStateContext} from "../../context/CheckContext";
 import NavigationActions from '../../navigation/navigationActions';
 
 const CheckForm = ({route}) => {
-    let {openLoading, navigatePush,closeLoading} = NavigationActions();
+    let {openLoading, navigatePush, navigateReset, closeLoading} = NavigationActions();
     const {
         setAddInvoiceModal, error, onSend, setPriceType, priceType,
         setCekDate, cekDate,
@@ -22,7 +22,7 @@ const CheckForm = ({route}) => {
     const onGoCheck = async () => {
         openLoading()
         if (parseInt(cekPrice) > parseInt(ftPrice)) {
-            navigate('addInvoice', {message: 'Çek tutarı fatura tutarından fazla olamaz. Varsa ek faturanızı ekleyin.'})
+            navigatePush('addInvoice', {message: 'Çek tutarı fatura tutarından fazla olamaz. Varsa ek faturanızı ekleyin.'})
         } else {
             await onSend().then(res => {
                     closeLoading()
@@ -30,7 +30,7 @@ const CheckForm = ({route}) => {
                 }
             ).catch(e => {
                 closeLoading()
-                navigate('errorModal', {message: e.message})
+                navigatePush('errorModal', {message: e.message})
             });
         }
     }

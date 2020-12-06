@@ -11,7 +11,7 @@ const AddInvoiceForm = () => {
     const {exFaturaInfo, setExFaturaInfo,extraDataGoBack} = useContext(AppStateContext)
     const picker = async (setState) => {
         const options = {
-            title: 'Görsel Seç',
+            title: 'Fatura Ekle',
             quality: 0.5,
             type: 'image/jpeg',
             takePhotoButtonTitle: 'Fotoğraf Çek',
@@ -71,9 +71,7 @@ const AddInvoiceForm = () => {
                         title={'Devam'}/>
             </View>
             <Text numberOfLines={2}>
-                Add Extra data Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem dolor nesciunt nihil non
-                optio possimus quasi quibusdam quo quos. Asperiores dolorem ex facere praesentium totam! Aspernatur
-                dolore facilis libero praesentium.
+                Yeni fatura ekledikten sonra fiyat bilgisini güncellemeyi unutmayınız.
             </Text>
         </View>
     )
