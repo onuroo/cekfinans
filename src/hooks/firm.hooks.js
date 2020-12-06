@@ -55,7 +55,12 @@ const FirmHooks = () => {
   }
 
   const getFormItem = (key) => {
-    return form[key];
+    return form[key]
+    // if (typeof form[key] === "string") {
+    //   return JSON.parse(form[key]);
+    // } else {
+    //   return form[key]
+    // }
   }
 
   const { navigatePush, openLoading, closeLoading, navigatePop, navigateReset } = NavigationActions();
@@ -183,6 +188,9 @@ const FirmHooks = () => {
             ...form,
             company_phone: `0${form.company_phone}`
         };
+        if (global.token) {
+          postBody.token = global.token;
+        }
         FirmRequests.companyRegister(postBody).then((response) => {
             console.log('hook response', response);
             AsyncStorage.getItem('userInfo').then((userInfo) => {
@@ -207,10 +215,12 @@ const FirmHooks = () => {
   }
 
   const getCompanyDetail = () => {
+    console.log('global', global);
     const { token } = global;
     const postBody = {
       token,
     };
+    console.log('')
     FirmRequests.companyDetail(postBody).then((response) => {
       console.log('companyDetail response', response);
       if (response) {
@@ -221,7 +231,13 @@ const FirmHooks = () => {
             Object.keys(object).forEach((key) => {
               console.log('company[key]', object[key], key);
               if (object[key]) {
-                form_object[key] = object[key].toString();
+                if (key === 'company_address_city' ||
+                  key === 'company_address_district' ||
+                  key === 'company_address_neighborhood') {
+                    form_object[key] = JSON.parse(object[key]);
+                  } else {
+                    form_object[key] = object[key].toString();
+                  }
               } else form_object[key] = null;
             })
             console.log('form_object', form_object);
