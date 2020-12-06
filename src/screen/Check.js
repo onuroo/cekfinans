@@ -4,12 +4,14 @@ import {StyleSheet, Platform, Image, Modal, Vibration, TouchableOpacity, Dimensi
 import {color} from "../components/ThemeConfig";
 import {Text, Button, Header, GoBack} from "../components";
 import {RNCamera} from 'react-native-camera';
-import {navigate} from "../config/navigator";
+
+import NavigationActions from '../navigation/navigationActions';
 
 let {width: wWidth, height: wHeight} = Dimensions.get('window');
 
 
 const CheckScreen = ({navigation}) => {
+    const { navigatePush } = NavigationActions();
     let camera = useRef(null)
     let [alert, setAlert] = useState(false)
     let [cameras, setCamera] = useState(true)
@@ -55,14 +57,14 @@ const CheckScreen = ({navigation}) => {
                                 Vibration.vibrate(10 * 10)
                                 setCamera(false)
                                 setTimeout(() => {
-                                    navigate('checkAdd')
+                                    navigatePush('checkAdd')
                                 }, 1500)
                             }
                         }}
                     />
                 </View>
                 <View style={{padding: 40, flex: 1, marginTop: 200,}}>
-                    <Button onPress={() => navigation.navigate('errorQrCode',{message:'Karekod bilgileri okunmadı.'})} variant={'primary'} color={color.white}
+                    <Button onPress={() => navigatePush('errorQrCode',{message:'Karekod bilgileri okunmadı.'})} variant={'primary'} color={color.white}
                             title={'Qr Kod Olmadan Devam Et'}/>
                 </View>
             </View>

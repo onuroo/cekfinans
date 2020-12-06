@@ -9,10 +9,15 @@ const request = axios.create({
 
 request.interceptors.request.use(
   async (config) => {
-    const tokens = await AsyncStorage.getItem('token');
-    if (tokens) {
+    const userInfo = await AsyncStorage.getItem('userInfo');
+    console.log('userInfo', userInfo);
+    let token = null;
+    if (userInfo) {
+      token = JSON.stringify(userInfo).token;
+    }
+    if (token) {
       config.headers = {
-        Authorization: `Bearer ${JSON.parse(tokens)}`,
+        Authorization: `Bearer ${JSON.parse(token)}`,
         Accept: 'application/json',
         'Content-Type': 'application/json',
       };

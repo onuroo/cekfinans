@@ -1,5 +1,8 @@
 import { useState } from 'react';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+
 import { emailValidation } from '../helpers/utils';
 import AuthRequests from '../requests/auth.requests';
 
@@ -79,8 +82,14 @@ const RegisterHooks = () => {
         }
         AuthRequests.login(loginPostBody).then((response) => {
           console.log('login response', response);
+          // AsyncStorage.setItem('token', JSON.stringify(response.token));
+          AsyncStorage.setItem('userInfo', JSON.stringify(response));
           navigatePop();
-          navigatePush('firmSettings');
+          if (!response.companyInfo) {
+            navigatePush('firmSettings');
+          } else {
+            navigateReset('home');
+          }
         })
         .catch((error) => {
           console.log('login error', error);

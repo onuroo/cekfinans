@@ -38,19 +38,25 @@ const LoginHooks = () => {
         }
         AuthRequests.login(loginPostBody).then((response) => {
           if (response.token){
-            AsyncStorage.setItem('token', JSON.stringify(response.token));
-            closeLoading()
-            navigateReset('home');
+            // AsyncStorage.setItem('token', JSON.stringify(response.token));
+            AsyncStorage.setItem('userInfo', JSON.stringify(response));
+            closeLoading();
+            if (!response.companyInfo) {
+              navigatePush('firmSettings');
+            } else {
+              navigateReset('home')
+            }
           }else{
-            closeLoading()
+            closeLoading();
             return false;
           }
-          closeLoading();
         }).catch((error) => {
+          console.log('errorerror', error);
           closeLoading();
         })
       })
     } else {
+      console.log('5555555');
       navigatePush('errorModal', { message: getValidationError() });
     }
   }

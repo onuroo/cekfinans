@@ -6,9 +6,10 @@ import {
   Image,
 } from 'react-native';
 
-import { navigateReset } from "../config/navigator";
+import NavigationActions from '../navigation/navigationActions';
 
 const SplashScreen = () => {
+  const { navigateReset } = NavigationActions();
   useEffect(() => {
     setTimeout(() => {
       navigateReset('home');

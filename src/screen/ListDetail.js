@@ -11,8 +11,8 @@ const ListDetailScreen = ({navigation, token, route}) => {
     let [data, setLData] = useState({});
     useEffect(() => {
         let getDetail = async () => {
-            let token = await AsyncStorage.getItem('token');
-            await request.post('check/detail', {token: JSON.parse(token), id: params.id}).then(res => setLData(res))
+            let userInfo = await AsyncStorage.getItem('userInfo');
+            await request.post('check/detail', {token: JSON.parse(userInfo).token, id: params.id}).then(res => setLData(res))
         }
         getDetail();
     }, [])

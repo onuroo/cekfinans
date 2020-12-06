@@ -30,6 +30,8 @@ class AuthRequests {
   login(postBody) {
       return new Promise((resolve, reject) => {
         request.post('user/login', postBody).then((response) => {
+            global.token = response.token;
+            console.log('responseeeee', response);
             resolve(response);
         }).catch((error) => {
             reject(error);
