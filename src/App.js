@@ -154,11 +154,6 @@ const App = () => {
     else initialRouteName = 'login';
     if (!state.companyInfo && state.token) initialRouteName = 'firmSettings';
 
-    const options = {
-        headerShown: false,
-        tabBarVisible: false,
-      };
-
     return (
         <ThemeProvider>
             <NavigationContainer>

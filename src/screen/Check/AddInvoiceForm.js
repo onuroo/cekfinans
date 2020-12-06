@@ -11,9 +11,12 @@ const AddInvoiceForm = () => {
     const {exFaturaInfo, setExFaturaInfo,extraDataGoBack} = useContext(AppStateContext)
     const picker = async (setState) => {
         const options = {
-            title: '',
+            title: 'Görsel Seç',
             quality: 0.5,
             type: 'image/jpeg',
+            takePhotoButtonTitle: 'Fotoğraf Çek',
+            chooseFromLibraryButtonTitle: 'Galeriden Seç',
+            cancelButtonTitle: 'İptal',
             maxWidth: 500,
             maxHeight: 500,
             storageOptions: {

@@ -17,9 +17,7 @@ const CheckForm = ({route}) => {
         setFtKonu, ftKonu,
         setftPrice, ftPrice,
         setftVKN, ftVKN, addInvoiceModal
-    } = useContext(AppStateContext);
-
-    const { navigatePush } = NavigationActions();
+    } = useContext(AppStateContext)
 
     const onGoCheck = async () => {
         openLoading()
