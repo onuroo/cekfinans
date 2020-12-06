@@ -13,7 +13,7 @@ const SettingsScreen = () => {
     let object = 'Konu :';
     let Send = async () => {
         openLoading();
-        let token = await AsyncStorage.getItem('token');
+        let token = await AsyncStorage.getItem('userInfo');
         await request.post('homepage/contact', {
             subject: subject,
             message: message,

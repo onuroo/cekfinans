@@ -34,7 +34,7 @@ const PasswordChangeScreen = () => {
         } else {
             openLoading()
             setError(null);
-            let token = await AsyncStorage.getItem('token')
+            let token = await AsyncStorage.getItem('userInfo')
             await request.post('homepage/confirmPassword', {
                 token: JSON.parse(token),
                 password: password,
