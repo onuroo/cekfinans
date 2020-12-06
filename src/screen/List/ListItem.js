@@ -22,6 +22,7 @@ const ListItem = ({data}) => {
                 <View>
                     <Text right>Çek No</Text>
                     <Text bold>{data.check_number}</Text>
+
                 </View>
                 <View>
                     <Text right>Çek Tarihi</Text>
@@ -29,10 +30,25 @@ const ListItem = ({data}) => {
                 </View>
             </View>
             <View style={{flexDirection: 'row'}}>
+                {console.log(data)}
+                {data.check_bid_status === 0 &&
                 <TouchableOpacity onPress={()=> navigatePush('listDetail',{data:data})} style={styles.bottom}>
                     <Text center h6 color={color.white}> Çek Detay</Text>
                     <Icon size={22} color={color.white} name={'chevron-right'}/>
-                </TouchableOpacity>
+                    </TouchableOpacity>
+                }
+                {data.check_bid_status === 1 &&
+                <View style={[styles.bottom,{backgroundColor:color.turkuaz}]}>
+                    <Text center h6 color={color.white}> Teklif Var</Text>
+                    <Icon size={22} color={color.white} name={'chevron-right'}/>
+                </View>
+                }
+                {data.check_bid_status === 2 &&
+                <View style={[styles.bottom,{backgroundColor:color.theme}]}>
+                    <Text center h6 color={color.white}> Teklif Kabul Edilmiş</Text>
+                    <Icon size={22} color={color.white} name={'chevron-right'}/>
+                </View>
+                }
                 <View style={[styles.bottom, {
                     backgroundColor: color.gray,
                     justifyContent: 'flex-end',

@@ -8,45 +8,7 @@ import NavigationActions from '../navigation/navigationActions';
 
 import request from "../config/request";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-let list = [
-	{
-		id: 1,
-		createDate: '14/11/2020 22:17',
-		label: 'Yurtiçi Faktoring',
-		checkNumber: '88888888888',
-		checkDate: '30/11/2020',
-		checkPrice: '120000.00 TL',
-		demand: true,
-	},
-	{
-		id: 2,
-		createDate: '14/11/2020 22:17',
-		label: 'Yurtiçi Faktoring',
-		checkNumber: '88888888888',
-		checkDate: '30/11/2020',
-		checkPrice: '120000.00 TL',
-		demand: true,
-	},
-	{
-		id: 3,
-		createDate: '14/11/2020 22:17',
-		label: 'Yurtiçi Faktoring',
-		checkNumber: '88888888888',
-		checkDate: '30/11/2020',
-		checkPrice: '120000.00 Tl',
-		demand: true,
-	},
-	{
-		id: 4,
-		createDate: '14/11/2020 22:17',
-		label: 'Yurtiçi Faktoring',
-		checkNumber: '88888888888',
-		checkDate: '30/11/2020',
-		checkPrice: '120000.00 TL',
-		demand: true,
-	},
-]
-const ListScreen = (props) => {
+const ListScreen = ({navigation}) => {
 	let [data,setData] = useState([]);
 
 	const { navigatePush } = NavigationActions();
@@ -55,7 +17,7 @@ const ListScreen = (props) => {
 			let userInfo = await AsyncStorage.getItem('userInfo');
 			await request.post('check/list',{token:JSON.parse(userInfo).token}).then(res => setData(res.checks)).catch(e => console.log(e));
 		}
-		getList()
+		getList();
 	},[])
 	return (
 		<View style={styles.container}>
