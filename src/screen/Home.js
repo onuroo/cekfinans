@@ -27,7 +27,7 @@ const HomeScreen = ({navigation}) => {
             <View style={{flex: 1}}>
                 <LinearGradient colors={[color.gradientStart, color.gradientStart, color.gradientEnd]}
                                 style={styles.linearGradient}>
-                    <UserComponent name={"Serdal AKDOOĞAN"} image={require('../assets/cek-icon.fw.png')}/>
+                    <UserComponent name={"Serdal AKDOOĞAN"} image={null}/>
                 </LinearGradient>
             </View>
             <View style={{flex: 0.5, padding: 30}}>
