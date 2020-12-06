@@ -20,7 +20,7 @@ const HomeScreen = ({navigation}) => {
 			} center
             right={
                 <TouchableOpacity style={{alignItems: 'center',justifyContent: 'center',}} onPress={() => {
-                    navigate('Notifications')
+                    navigatePush('Notifications')
                 }}>
                     <Icon name={'bell'} size={22} color={color.white}/>
                 </TouchableOpacity>
