@@ -17,7 +17,15 @@ const HomeScreen = ({navigation}) => {
 				}}>
 					<Icon name={'user'} size={22} color={color.white} />
 				</TouchableOpacity>
-			} center/>
+			} center
+            right={
+                <TouchableOpacity style={{alignItems: 'center',justifyContent: 'center',}} onPress={() => {
+                    navigate('Notifications')
+                }}>
+                    <Icon name={'bell'} size={22} color={color.white}/>
+                </TouchableOpacity>
+            }
+            />
 			<View style={{flex: 1}}>
 				<LinearGradient colors={[color.gradientStart, color.gradientStart, color.gradientEnd]}
 				                style={styles.linearGradient}>
@@ -50,32 +58,32 @@ const HomeScreen = ({navigation}) => {
 	)
 }
 const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: color.gray,
-	},
-	linearGradient: {
-		flex: 1,
-		paddingLeft: 10,
-		paddingRight: 10,
-	},
-	bottomArea: {
-		backgroundColor: color.gray,
-		flexDirection: 'row',
-		top: -100,
-		borderRadius: 20,
-		padding: 0,
-		zIndex: 2
-	},
-	ButtonArea: {
-		backgroundColor: color.white,
-		margin: 20,
-		paddingTop: 30,
-		paddingBottom: 5,
-		justifyContent: 'center',
-		alignItems: 'center',
-		width: wWidth / 2 - 70
-	}
+    container: {
+        flex: 1,
+        backgroundColor: color.gray,
+    },
+    linearGradient: {
+        flex: 1,
+        paddingLeft: 10,
+        paddingRight: 10,
+    },
+    bottomArea: {
+        backgroundColor: color.gray,
+        flexDirection: 'row',
+        top: -100,
+        borderRadius: 20,
+        padding: 0,
+        zIndex: 2
+    },
+    ButtonArea: {
+        backgroundColor: color.white,
+        margin: 20,
+        paddingTop: 30,
+        paddingBottom: 5,
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: wWidth / 2 - 70
+    }
 
 })
 export default HomeScreen;

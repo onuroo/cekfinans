@@ -11,7 +11,7 @@ const AppStateProvider = props => {
     const [chekOn, setCheckOn] = useState(null);
     const [chekArka, setCheckArka] = useState(null);
     const [chekFatura, setCheckFatura] = useState(null);
-    const [ftVKN, setftVKN] = useState(null);
+    const [ftVKN, setftVKN] = useState('');
     const [ftPrice, setftPrice] = useState(null);
     const [ftKonu, setFtKonu] = useState(null);
     const [cekPrice, setCekPrice] = useState(null);
@@ -27,6 +27,22 @@ const AppStateProvider = props => {
             setExtraData([exFaturaInfo])
         }
         setExFaturaInfo(null)
+    }
+    const clearData = () => {
+        setCekNumber(null)
+        setCekNumber(setExFaturaInfo)
+        setExtraData([])
+        setAddInvoiceModal(null)
+        setCheckArka(null)
+        setCheckOn(null)
+        setPriceType(null)
+        setCekVKN(null)
+        setCekDate(null)
+        setCekPrice(null)
+        setFtKonu(null)
+        setftPrice(null)
+        setftVKN(null)
+        setCheckFatura(null)
     }
     const validates = () => {
         const rules = [
@@ -74,10 +90,12 @@ const AppStateProvider = props => {
                 params.append('check_image_back',{uri: chekArka.uri, name: chekArka.fileName+'-.jpg', type: chekArka.type});
                 if (extraData.length > 0){
                     extraData.map(item => {
-                        params.append('check_invoice_extra_images[]',item);
+                        params.append('check_invoice_extra_images[]',{uri: item.uri, name: item.fileName+'-.jpg', type: item.type});
                     })
                 }
-                await checkRequests.CheckRegister(params)
+               let data =  await checkRequests.CheckRegister(params)
+                console.log(data)
+                clearData();
                 resolve({status: false, message: ''})
             } else {
                 reject({status: true, message:await getValidationError()})

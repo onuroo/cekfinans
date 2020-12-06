@@ -7,6 +7,7 @@ import {AppStateContext} from "../../context/CheckContext";
 import NavigationActions from '../../navigation/navigationActions';
 
 const CheckForm = ({route}) => {
+    let {openLoading, closeLoading} = NavigationActions();
     const {
         setAddInvoiceModal, error, onSend, setPriceType, priceType,
         setCekDate, cekDate,
@@ -20,13 +21,19 @@ const CheckForm = ({route}) => {
 
     const { navigatePush } = NavigationActions();
 
-    const onGoCheck = () => {
-
+    const onGoCheck = async () => {
+        openLoading()
         if (parseInt(cekPrice) > parseInt(ftPrice)) {
-            navigatePush('addInvoice', {message: 'Çek tutarı fatura tutarından fazla olamaz. Varsa ek faturanızı ekleyin.'})
-        } else{
-            onSend().then(res => console.log('asdas Tamamdır!')).catch(e=> navigatePush('errorModal', {message: e.message}));
-
+            navigate('addInvoice', {message: 'Çek tutarı fatura tutarından fazla olamaz. Varsa ek faturanızı ekleyin.'})
+        } else {
+            await onSend().then(res => {
+                    closeLoading()
+                    navigateReset('home')
+                }
+            ).catch(e => {
+                closeLoading()
+                navigate('errorModal', {message: e.message})
+            });
         }
     }
     return (
@@ -46,7 +53,8 @@ const CheckForm = ({route}) => {
                 <Input value={cekVKN} maxLength={11} onChangeText={(text) => setCekVKN(text)} keybordType={"numeric"}
                        placeholder={'ÇEK VKN'}/>
                 <Date setSelected={setCekDate} selected={cekDate} label={'ÇEK TARİHİ'}/>
-                <Selected style={{backgroundColor:color.gray}} setSelected={setPriceType} placeholder={"ÇEK PARA BİRİMİ"} selected={priceType}
+                <Selected style={{backgroundColor: color.gray}} setSelected={setPriceType}
+                          placeholder={"ÇEK PARA BİRİMİ"} selected={priceType}
                           data={[{title: 'TL', id: 1}]}/>
                 <Input value={cekNumber} maxLength={12} onChangeText={(text) => setCekNumber(text)}
                        placeholder={'ÇEK NUMARASI'}/>

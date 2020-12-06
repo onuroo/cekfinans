@@ -11,6 +11,7 @@ const color = {
 	white:'#fff',
 	black:'#222',
 	gray:'#e7e7e7',
+	gray2:'#e8e8e8',
 	theme:'#f87303',
 	warning:'#f77f00',
 	danger:'#ce1d1d'
