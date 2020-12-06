@@ -1,21 +1,43 @@
 import React, {useEffect, useState} from 'react'
-import {View, StyleSheet, Image} from 'react-native'
-import {GoBack, Header, Icon, Text} from '../components'
+import {View, StyleSheet, ScrollView, Image} from 'react-native'
+import {GoBack, Header, Button, Icon, Text} from '../components'
 import {color} from "../components/ThemeConfig";
 import request from "../config/request";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import moment from "moment";
-import {CDN} from '../config/index';
+import NavigationActions from "../navigation/navigationActions";
+
 const ListDetailScreen = ({navigation, token, route}) => {
+    let {navigatePush,openLoading,closeLoading} = NavigationActions();
     let params = route.params.data;
-    let [data, setLData] = useState({});
+    let [data, setData] = useState({});
+    let [loading, setLoading] = useState(false);
     useEffect(() => {
         let getDetail = async () => {
             let userInfo = await AsyncStorage.getItem('userInfo');
-            await request.post('check/detail', {token: JSON.parse(userInfo).token, id: params.id}).then(res => setLData(res))
+            await request.post('check/detail', {
+                token: JSON.parse(userInfo).token,
+                id: params.id
+            }).then(res => setData(res))
         }
         getDetail();
-    }, [])
+    }, [loading])
+    let Accept = async () => {
+        setLoading(true)
+        openLoading()
+        let userInfo = await AsyncStorage.getItem('userInfo');
+        await request.post('check/accept', {
+            id: data.id,
+            token: JSON.parse(userInfo).token
+        }).then(res => {
+            setLoading(false);
+            closeLoading();
+            navigatePush('successModal', {params: {message: res.message}})
+        }).catch(e => {
+            setLoading(false)
+            closeLoading()
+        })
+    }
     return (
         <View style={styles.container}>
             <Header left={<GoBack/>} title={'Çek Detay'}/>
@@ -36,12 +58,12 @@ const ListDetailScreen = ({navigation, token, route}) => {
                     </View>
                     <View>
                         <Text color={color.secondary2} right>Çek Tarihi</Text>
-                        <Text bold>{moment(data.check_date,"YYYY-MM-DD").format('DD-MM-YYYY')}</Text>
+                        <Text bold>{moment(data.check_date, "YYYY-MM-DD").format('DD-MM-YYYY')}</Text>
                     </View>
                 </View>
                 <View style={{flexDirection: 'row'}}>
                     <View style={styles.bottom}>
-                        <Text p center color={color.gradientEnd}> HENÜZ TEKLİF YOK</Text>
+                        <Text h5 center color={color.gradientEnd}>{data.check_bid_status}</Text>
                     </View>
                     <View style={[styles.bottom, {
                         backgroundColor: color.gray,
@@ -50,7 +72,7 @@ const ListDetailScreen = ({navigation, token, route}) => {
                         <Text right h5 bold> {data.check_total} TL</Text>
                     </View>
                 </View>
-                <View style={{padding: 10, backgroundColor: color.gray}}>
+                <ScrollView style={{padding: 10, backgroundColor: color.gray}}>
                     {/*<View style={[{
                         flexDirection: 'row',
                         padding: 20,
@@ -98,21 +120,21 @@ const ListDetailScreen = ({navigation, token, route}) => {
                         </View>
                     </View>
                     <View style={[styles.bottomRow]}>
-                        <View style={{flex:0.4}}>
+                        <View style={{flex: 0.4}}>
                             <Text p bold center>ÇEK ÖNYÜZÜ</Text>
                         </View>
-                        <View style={{flex:0.2}}>
+                        <View style={{flex: 0.2}}>
                             <Image style={{width: 50, height: 50, resizeMode: 'contain'}}
-                                   source={{uri:`${data.check_image_front}`}}/>
+                                   source={{uri: `${data.check_image_front}`}}/>
                         </View>
                     </View>
                     <View style={[styles.bottomRow]}>
-                        <View style={{flex:0.4}}>
+                        <View style={{flex: 0.4}}>
                             <Text p bold center>ÇEK ARKA YÜZÜ</Text>
                         </View>
-                        <View style={{flex:0.2}}>
+                        <View style={{flex: 0.2}}>
                             <Image style={{width: 50, height: 50, resizeMode: 'contain'}}
-                                   source={{uri:`${data.check_image_back}`}}/>
+                                   source={{uri: `${data.check_image_back}`}}/>
                         </View>
                     </View>
                     <View style={[styles.bottomRow, {backgroundColor: color.lightGray}]}>
@@ -123,7 +145,22 @@ const ListDetailScreen = ({navigation, token, route}) => {
                             <Text bold h6 center>{data.check_invoice_amount} TL</Text>
                         </View>
                     </View>
-                </View>
+                    {data.check_bid > 0 &&
+                    <>
+                        <View style={[styles.bottomRow]}>
+                            <View style={{flex: 0.4}}>
+                                <Text p bold center>TEKLİFLER</Text>
+                            </View>
+                            <View style={{flex: 0.6}}>
+                                <Text bold h6 center>{data.check_bid} TL</Text>
+                            </View>
+                        </View>
+                        <View style={{marginTop: 20}}>
+                            <Button color={color.white} onPress={() => Accept()} title={'Kabul Et'}
+                                    variant={'primary'}/>
+                        </View>
+                    </>}
+                </ScrollView>
             </View>
         </View>
     )
