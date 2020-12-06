@@ -9,7 +9,9 @@ import NavigationActions from '../navigation/navigationActions';
 
 import FirmHooks from '../hooks/firm.hooks';
 
-const FirmSettingsScreen = () => {
+const FirmSettingsScreen = ({ route }) => {
+    console.log('route', route)
+    const { fromLogin } = route.params;
     let textColor = color.gradientEnd2;
 
     const {
@@ -96,7 +98,7 @@ const FirmSettingsScreen = () => {
                         </View>
                         <View style={styles.row}>
                             <Selected
-                              selected={JSON.parse(getFormItem('company_address_city'))}
+                              selected={getFormItem('company_address_city')}
                               setSelected={setSelectedCity}
                               type={'city'}
                               placeholder={'Şehir Seç'}
@@ -105,7 +107,7 @@ const FirmSettingsScreen = () => {
                         </View>
                         <View style={styles.row}>
                             <Selected
-                              selected={JSON.parse(getFormItem('company_address_district'))}
+                              selected={getFormItem('company_address_district')}
                               setSelected={setSelectedDistrict}
                               type={'district'}
                               placeholder={'İlçe Seç'}
@@ -114,7 +116,7 @@ const FirmSettingsScreen = () => {
                         </View>
                         <View style={styles.row}>
                             <Selected
-                              selected={JSON.parse(getFormItem('company_address_neighborhood'))}
+                              selected={getFormItem('company_address_neighborhood')}
                               setSelected={setSelectedNeighborhood}
                               type={'neighborhood'}
                               placeholder={'Mahalle Seç'}
@@ -187,7 +189,7 @@ const FirmSettingsScreen = () => {
                     </View> */}
                     <View style={styles.row}>
                         <Button variant={'primary'} color={color.white} title={'Gönder'}
-                            onPress={ isUpdate ? updateCompanyDetail : companyRegister }/>
+                            onPress={ fromLogin ? companyRegister : updateCompanyDetail  }/>
                     </View>
                 </ScrollView>
 

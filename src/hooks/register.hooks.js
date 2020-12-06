@@ -86,7 +86,8 @@ const RegisterHooks = () => {
           AsyncStorage.setItem('userInfo', JSON.stringify(response));
           navigatePop();
           if (!response.companyInfo) {
-            navigatePush('firmSettings');
+            global.token = response.token;
+            navigatePush('firmSettings', { fromLogin: true });
           } else {
             navigateReset('home');
           }

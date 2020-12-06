@@ -8,7 +8,7 @@ import NavigationActions from '../navigation/navigationActions';
 
 const LoginHooks = () => {
   const [tckn, setTckn] = useState('34343193976');
-  const [password, setPassword] = useState('123123123');
+  const [password, setPassword] = useState('2020asfirinmakine');
 
   const { navigatePush, openLoading, closeLoading, navigatePop, navigateReset } = NavigationActions();
   
@@ -42,7 +42,7 @@ const LoginHooks = () => {
             AsyncStorage.setItem('userInfo', JSON.stringify(response));
             closeLoading();
             if (!response.companyInfo) {
-              navigatePush('firmSettings');
+              navigatePush('firmSettings', { fromLogin: true });
             } else {
               navigateReset('home')
             }

@@ -43,7 +43,7 @@ const HomeScreen = ({navigation}) => {
 							</Text>
 						</View>
 					</TouchableOpacity>
-					<TouchableOpacity onPress={() => navigatePush('firmSettings')}>
+					<TouchableOpacity onPress={() => navigatePush('firmSettings', { fromLogin: false })}>
 						<View style={[styles.ButtonArea, {borderBottomWidth: 4, borderColor: color.gradientEnd}]}>
 							<Image style={{marginBottom: 10, width: wWidth / 2 - 70, resizeMode: 'contain', height: 50}}
 							       source={require('../assets/setttings-icon-2.fw.png')}/>

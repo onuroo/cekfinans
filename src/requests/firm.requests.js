@@ -14,6 +14,7 @@ class FirmRequests {
     });
   }
   companyDetail(postBody) {
+    console.log('company/detail postBody', postBody);
     return new Promise((resolve, reject) => {
         request.post('company/detail', postBody).then((response) => {
             console.log('company/detail response', response);
