@@ -36,7 +36,7 @@ const PasswordChangeScreen = () => {
             setError(null);
             let token = await AsyncStorage.getItem('userInfo')
             await request.post('homepage/confirmPassword', {
-                token: JSON.parse(token),
+                token: JSON.parse(token).token,
                 password: password,
                 new_password: newPassword,
                 new_password_restart: passwordReply
@@ -45,7 +45,10 @@ const PasswordChangeScreen = () => {
                     closeLoading()
                     navigatePush('successModal')
                 }
-            ).catch(e => closeLoading()
+            ).catch(e => {
+                setError(e.message)
+                    closeLoading()
+                }
             )
         }
     }

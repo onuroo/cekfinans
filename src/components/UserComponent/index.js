@@ -6,12 +6,21 @@ import ImagePicker from "react-native-image-picker";
 import request from "../../config/request";
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import NavigationActions from '../../navigation/navigationActions'
-
-const UserComponent = ({name}) => {
+import {CDN} from '../../config'
+const UserComponent = () => {
     let {openLoading, closeLoading, navigatePush} = NavigationActions()
-    let [image, setImage] = useState(null);
-
-    let [selected, setSelected] = useState(image !== null ? image : null);
+    let [userInfo,setUserInfo] = useState({})
+    let [selected, setSelected] = useState(null);
+    useEffect(()=> {
+        let getUserInfo=async ()=> {
+            let userInfo = await AsyncStorage.getItem('userInfo');
+            await request.post('company/detail',{token:JSON.parse(userInfo).token}).then(res => setUserInfo(res.company[0]))
+        }
+        getUserInfo()
+    },[])
+    useEffect(()=> {
+        setSelected(`${CDN}${userInfo.company_image}`)
+    },[userInfo])
     let upload = async (data) => {
         openLoading()
         let token = await AsyncStorage.getItem('userInfo');
@@ -26,7 +35,6 @@ const UserComponent = ({name}) => {
         }).then(res => {
             closeLoading();
             navigatePush('successModal', {params: {message: res.message}})
-            AsyncStorage.setItem('image', data.uri)
         }).catch(e => closeLoading());
     }
     const picker = async () => {
@@ -96,7 +104,7 @@ const UserComponent = ({name}) => {
 
             <View>
                 <Text h5 color={color.white}>
-                    {name}
+                    {userInfo.company_official_name}
                 </Text>
             </View>
         </View>

@@ -2,7 +2,6 @@ import React, {useContext} from 'react';
 import {View} from "react-native";
 import {Header, Button, Date, Input, Selected, GoBack} from "../../components";
 import {color} from "../../components/ThemeConfig";
-import CheckHooks from '../../hooks/check.hooks';
 import {AppStateContext} from "../../context/CheckContext";
 import NavigationActions from '../../navigation/navigationActions';
 
@@ -22,6 +21,7 @@ const CheckForm = ({route}) => {
     const onGoCheck = async () => {
         openLoading()
         if (parseInt(cekPrice) > parseInt(ftPrice)) {
+            closeLoading()
             navigatePush('addInvoice', {message: 'Çek tutarı fatura tutarından fazla olamaz. Varsa ek faturanızı ekleyin.'})
         } else {
             await onSend().then(res => {

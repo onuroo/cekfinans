@@ -16,7 +16,7 @@ const AppStateProvider = props => {
     const [ftKonu, setFtKonu] = useState(null);
     const [cekPrice, setCekPrice] = useState(null);
     const [cekDate, setCekDate] = useState(null);
-    const [cekVKN, setCekVKN] = useState(null);
+    const [cekVKN, setCekVKN] = useState('');
     const [priceType, setPriceType] = useState(null);
     const [cekNumber, setCekNumber] = useState(null);
     const [error, setError] = useState({status: false, message:''});
@@ -36,12 +36,12 @@ const AppStateProvider = props => {
         setCheckArka(null)
         setCheckOn(null)
         setPriceType(null)
-        setCekVKN(null)
+        setCekVKN('')
         setCekDate(null)
         setCekPrice(null)
         setFtKonu(null)
         setftPrice(null)
-        setftVKN(null)
+        setftVKN('')
         setCheckFatura(null)
     }
     const validates = () => {
