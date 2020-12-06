@@ -32,7 +32,7 @@ import ListScreen from './screen/List';
 import ListDetailScreen from './screen/ListDetail';
 import FirmSettingsScreen from './screen/FirmSettings';
 import Tabs from './components/Tab'
-import {navigationRef} from "./config/navigator";
+import {navigateReset, navigationRef} from "./config/navigator";
 import CheckAddScreen from "./screen/CheckAdd";
 import CheckForm from "./screen/Check/checkForm";
 import AddInvoiceForm from "./screen/Check/AddInvoiceForm";
@@ -46,6 +46,7 @@ import SuccessModal from "./components/SuccessModal";
 import LoadingModal from "./components/LoadingModal";
 import AppStateProvider from "./context/CheckContext";
 import AddInvoice from './components/AddInvoice'
+import NotificationScreen from './screen/NotificationScreen'
 import {useWindowDimensions} from 'react-native';
 
 import {color} from "./components/ThemeConfig";
@@ -73,7 +74,10 @@ function CustomDrawerContent(props) {
                 <View style={{marginVertical: 100}}>
                     <TouchableOpacity
                         style={{width: '100%', flexDirection: 'row', alignItems: 'center', paddingLeft: 10}}
-                        onPress={() => AsyncStorage.removeItem('token')}>
+                        onPress={() => {
+                            AsyncStorage.removeItem('token');
+                            navigateReset('login')
+                        }}>
                         <Icon size={22} color={color.black} name={'log-out'}/>
                         <Text left h5> Çıkış Yap </Text>
                     </TouchableOpacity>
@@ -159,6 +163,7 @@ const App = () => {
                             <Stack.Screen name="loading" component={LoadingModal} options={{...ModalTransition}}/>
                             <Stack.Screen name="codeVerify" component={CodeVerify}/>
                             <Stack.Screen name="PasswordChange" component={PasswordChangeScreen}/>
+                            <Stack.Screen name="Notifications" component={NotificationScreen}/>
                         </Stack.Navigator>
                     </NavigationContainer>
                 </ThemeProvider>

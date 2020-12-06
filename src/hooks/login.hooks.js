@@ -39,8 +39,10 @@ const LoginHooks = () => {
         AuthRequests.login(loginPostBody).then((response) => {
           if (response.token){
             AsyncStorage.setItem('token', JSON.stringify(response.token));
+            closeLoading()
             navigateReset('home');
           }else{
+            closeLoading()
             return false;
           }
           closeLoading();

@@ -4,9 +4,11 @@ import {Header, Button, Date, Input, Selected, GoBack} from "../../components";
 import {color} from "../../components/ThemeConfig";
 import CheckHooks from '../../hooks/check.hooks';
 import {AppStateContext} from "../../context/CheckContext";
-import {navigate} from "../../config/navigator";
+import {navigate, navigateReset} from "../../config/navigator";
+import NavigationActions from "../../navigation/navigationActions";
 
 const CheckForm = ({route}) => {
+    let {openLoading, closeLoading} = NavigationActions();
     const {
         setAddInvoiceModal, error, onSend, setPriceType, priceType,
         setCekDate, cekDate,
@@ -18,13 +20,19 @@ const CheckForm = ({route}) => {
         setftVKN, ftVKN, addInvoiceModal
     } = useContext(AppStateContext)
 
-    const onGoCheck = () => {
-
+    const onGoCheck = async () => {
+        openLoading()
         if (parseInt(cekPrice) > parseInt(ftPrice)) {
             navigate('addInvoice', {message: 'Çek tutarı fatura tutarından fazla olamaz. Varsa ek faturanızı ekleyin.'})
-        } else{
-            onSend().then(res => console.log('asdas Tamamdır!')).catch(e=> navigate('errorModal', {message: e.message}));
-
+        } else {
+            await onSend().then(res => {
+                    closeLoading()
+                    navigateReset('home')
+                }
+            ).catch(e => {
+                closeLoading()
+                navigate('errorModal', {message: e.message})
+            });
         }
     }
     return (
@@ -44,7 +52,8 @@ const CheckForm = ({route}) => {
                 <Input value={cekVKN} maxLength={11} onChangeText={(text) => setCekVKN(text)} keybordType={"numeric"}
                        placeholder={'ÇEK VKN'}/>
                 <Date setSelected={setCekDate} selected={cekDate} label={'ÇEK TARİHİ'}/>
-                <Selected style={{backgroundColor:color.gray}} setSelected={setPriceType} placeholder={"ÇEK PARA BİRİMİ"} selected={priceType}
+                <Selected style={{backgroundColor: color.gray}} setSelected={setPriceType}
+                          placeholder={"ÇEK PARA BİRİMİ"} selected={priceType}
                           data={[{title: 'TL', id: 1}]}/>
                 <Input value={cekNumber} maxLength={12} onChangeText={(text) => setCekNumber(text)}
                        placeholder={'ÇEK NUMARASI'}/>

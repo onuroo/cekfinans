@@ -31,7 +31,6 @@ request.interceptors.request.use(
 
 request.interceptors.response.use(
   function (response) {
-    console.log('333333 response', response);
     if (response.status === 206) {
       return Promise.reject(response.data);
     } else return response.data;
