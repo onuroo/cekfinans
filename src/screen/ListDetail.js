@@ -8,14 +8,14 @@ import moment from "moment";
 import NavigationActions from "../navigation/navigationActions";
 
 const ListDetailScreen = ({navigation, token, route}) => {
-    let {navigatePush,openLoading,closeLoading} = NavigationActions();
+    let {navigatePush, openLoading, closeLoading} = NavigationActions();
     let params = route.params.data;
     let [data, setData] = useState({});
     let [loading, setLoading] = useState(false);
     useEffect(() => {
         let getDetail = async () => {
             let userInfo = await AsyncStorage.getItem('userInfo');
-            await request.post('check/detail', {
+            request.post('check/detail', {
                 token: JSON.parse(userInfo).token,
                 id: params.id
             }).then(res => setData(res))

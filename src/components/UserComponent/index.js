@@ -24,8 +24,8 @@ const UserComponent = ({name}) => {
                 Accept: 'application/json',
             },
         }).then(res => {
-            navigatePush('SuccessModal', {params: {message: res.message}})
             closeLoading();
+            navigatePush('successModal', {params: {message: res.message}})
             AsyncStorage.setItem('image', data.uri)
         }).catch(e => closeLoading());
     }
