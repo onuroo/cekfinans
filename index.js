@@ -9,7 +9,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 global.token = null;
 
-AsyncStorage.removeItem('userInfo')
+// AsyncStorage.removeItem('userInfo')
 
 AsyncStorage.getItem('userInfo').then((userInfo) => {
     console.log('userInfo', userInfo);
