@@ -7,7 +7,7 @@ import {AppStateContext} from "../../context/CheckContext";
 import NavigationActions from '../../navigation/navigationActions';
 
 const CheckForm = ({route}) => {
-    let {openLoading, closeLoading} = NavigationActions();
+    let {openLoading, navigatePush,closeLoading} = NavigationActions();
     const {
         setAddInvoiceModal, error, onSend, setPriceType, priceType,
         setCekDate, cekDate,

@@ -27,7 +27,7 @@ const CheckScreen = ({navigation}) => {
     }, [navigation]);
     return (
         <View style={styles.container}>
-            <Header left={<GoBack navigation={navigation}/>} title={'Talep Ekle'} description={'Yurtiçi Faktoring'}/>
+            <Header  title={'Talep Ekle'} description={'Yurtiçi Faktoring'}/>
             <View style={{flex: 1, padding: 10, backgroundColor: color.white,}}>
                 <View style={{paddingVertical: 30, flex: 1, alignItems: 'center', alignContent: 'center'}}>
                     <Text center bold h5> Çekinizin karekodunu taratın.</Text>

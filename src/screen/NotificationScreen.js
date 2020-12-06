@@ -10,8 +10,8 @@ const NotificationScreen = (props) => {
     let [data, setData] = useState([]);
     useEffect(() => {
         let getList = async () => {
-            let token = await AsyncStorage.getItem('token');
-            await request.post('notification', {token: JSON.parse(token)}).then(res =>
+            let token = await AsyncStorage.getItem('userInfo');
+            await request.post('notification', {token: JSON.parse(token).token}).then(res =>
                 setData(res.notification)).catch(e => console.log(e));
         }
         getList()

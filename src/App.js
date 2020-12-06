@@ -74,8 +74,8 @@ function CustomDrawerContent(props) {
                     <TouchableOpacity
                         style={{width: '100%', flexDirection: 'row', alignItems: 'center', paddingLeft: 10}}
                         onPress={() => {
-                            navigateReset('login')
                             AsyncStorage.removeItem('userInfo')
+                            props.navigation.navigate('login')
                         } }>
                         <Icon size={22} color={color.black} name={'log-out'}/>
                         <Text left h5> Çıkış Yap </Text>

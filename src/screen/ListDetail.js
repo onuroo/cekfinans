@@ -125,7 +125,7 @@ const ListDetailScreen = ({navigation, token, route}) => {
                         </View>
                         <View style={{flex: 0.2}}>
                             <Image style={{width: 50, height: 50, resizeMode: 'contain'}}
-                                   source={{uri: `${data.check_image_front}`}}/>
+                                   source={{uri: data.check_image_front}}/>
                         </View>
                     </View>
                     <View style={[styles.bottomRow]}>
@@ -134,7 +134,7 @@ const ListDetailScreen = ({navigation, token, route}) => {
                         </View>
                         <View style={{flex: 0.2}}>
                             <Image style={{width: 50, height: 50, resizeMode: 'contain'}}
-                                   source={{uri: `${data.check_image_back}`}}/>
+                                   source={{uri: data.check_image_back}}/>
                         </View>
                     </View>
                     <View style={[styles.bottomRow, {backgroundColor: color.lightGray}]}>

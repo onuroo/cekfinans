@@ -73,10 +73,9 @@ const AppStateProvider = props => {
        return new Promise(async (resolve, reject) => {
             if (validates()) {
                 let userInfo = await AsyncStorage.getItem('userInfo');
-                const { token } = userInfo;
                 let date = moment(cekDate,'DD-MM-YYYY').format('YYYY-MM-DD')
                 let params = new FormData();
-                params.append('token',JSON.parse(token));
+                params.append('token',JSON.parse(userInfo).token);
                 params.append('check_bill_debtor_vkn',ftVKN);
                 params.append('check_invoice_amount',ftPrice);
                 params.append('check_content',ftKonu);
@@ -94,7 +93,6 @@ const AppStateProvider = props => {
                     })
                 }
                let data =  await checkRequests.CheckRegister(params)
-                console.log(data)
                 clearData();
                 resolve({status: false, message: ''})
             } else {
