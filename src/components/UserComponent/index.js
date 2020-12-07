@@ -19,7 +19,7 @@ const UserComponent = () => {
         getUserInfo()
     },[])
     useEffect(()=> {
-        setSelected(`${CDN}${userInfo.company_image}`)
+        setSelected(`${userInfo.company_image}`)
     },[userInfo])
     let upload = async (data) => {
         openLoading()
