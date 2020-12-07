@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import request from "../config/request";
 
 import FirmRequests from '../requests/firm.requests';
+import { emailValidation } from '../helpers/utils';
 
 import NavigationActions from '../navigation/navigationActions';
 
@@ -47,6 +48,10 @@ const FirmHooks = () => {
     company_address_door_no: null,
     company_address_apartment_no: null,
     company_official_title: null,
+    company_official_email: null,
+    company_official_name: null,
+    company_official_phone: null,
+    company_official_tckn: null,
   });
 
   const handleFormInputs = (key, value) => {
@@ -100,7 +105,7 @@ const FirmHooks = () => {
     handleFormInputs('company_address_neighborhood', val);
   }
 
-  const isValidated = () => {
+  const isValidated = (isUpdate = false) => {
 
     const {
         token,
@@ -118,6 +123,10 @@ const FirmHooks = () => {
         company_address_door_no,
         company_address_apartment_no,
         company_official_title,
+        company_official_email,
+        company_official_name,
+        company_official_phone,
+        company_official_tckn,
     } = form;
     const rules = [
         token,
@@ -137,6 +146,13 @@ const FirmHooks = () => {
         company_address_apartment_no,
         company_official_title,
     ];
+    if (isUpdate) {
+      rules.push((company_official_email && emailValidation(company_official_email)))
+      rules.push(company_official_name)
+      rules.push(company_official_phone)
+      rules.push(company_official_tckn)
+      rules.push(company_official_title)
+    }
     return rules.every(i => i);
   }
 
@@ -157,6 +173,10 @@ const FirmHooks = () => {
         company_address_door_no,
         company_address_apartment_no,
         company_official_title,
+        company_official_email,
+        company_official_name,
+        company_official_phone,
+        company_official_tckn,
     } = form;
 
     if (!token) return 'token bilgisi boş bırakılamaz!';
@@ -167,6 +187,7 @@ const FirmHooks = () => {
     if (!company_phone) return 'Telefon bilgisi boş bırakılamaz!';
     if (!(company_phone && company_phone.length > 9)) return 'Telefon bilgisi 10 hane olmamalı!';
     if (!email) return 'E-posta adresi bilgisi boş bırakılamaz!';
+    if (email && !emailValidation(email)) return 'E-posta adresi bilgisi uygun değil!';
     if (!company_website) return 'Website bilgisi boş bırakılamaz!';
     if (!company_address_city) return 'Şehir bilgisi boş bırakılamaz!';
     if (!company_address_district) return 'İlçe bilgisi boş bırakılamaz!';
@@ -175,6 +196,15 @@ const FirmHooks = () => {
     if (!company_address_door_no) return 'Kapı no bilgisi boş bırakılamaz!';
     if (!company_address_apartment_no) return 'Daire no bilgisi boş bırakılamaz!';
     if (!company_official_title) return 'Firma yetkilisi ünvanı bilgisi boş bırakılamaz!';
+
+    if (isUpdate) {
+      if (!company_official_email) return 'Firma yetkilisi e-posta adresi boş bırakılamaz!';
+      if (company_official_email && !emailValidation(company_official_email)) return 'Firma yetkilisi E-posta adresi uygun değil!';
+      if (!company_official_name) return 'Firma yetkilisi isim bilgisi boş bırakılamaz!';
+      if (!company_official_phone) return 'Firma yetkilisi telefon bilgisi boş bırakılamaz!';
+      if (!company_official_tckn) return 'Firma yetkilisi kimlik no bilgisi boş bırakılamaz!';
+      if (!company_official_title) return 'Firma yetkilisi ünvanı bilgisi boş bırakılamaz!';
+    }
     else return null;
   }
 
@@ -220,13 +250,12 @@ const FirmHooks = () => {
     const postBody = {
       token,
     };
-    console.log('')
     FirmRequests.companyDetail(postBody).then((response) => {
       console.log('companyDetail response', response);
       if (response) {
         const { company } = response;
-        if (company && company.length > 0) {
-            const object = company[0];
+        if (company) {
+            const object = company;
             const form_object = {}
             Object.keys(object).forEach((key) => {
               console.log('company[key]', object[key], key);
@@ -251,7 +280,7 @@ const FirmHooks = () => {
   };
   
   const updateCompanyDetail = () => {
-    if (isValidated()) {
+    if (isValidated(true)) {
       openLoading();
       console.log('updateCompanyDetail form', form);
       FirmRequests.updateCompanyDetail(form).then((response) => {
@@ -264,7 +293,7 @@ const FirmHooks = () => {
         console.log('updateCompanyDetail error', error);
       });
     } else {
-      navigatePush('errorModal', { message: getValidationError() });
+      navigatePush('errorModal', { message: getValidationError(true) });
     }
     
   }

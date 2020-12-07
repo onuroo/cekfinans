@@ -144,30 +144,20 @@ const FirmSettingsScreen = ({ route }) => {
                             <Text h5 color={color.gradientEnd}>Firma Yetkilisi: </Text>
                         </View>
                     </View>
-                    <View style={styles.row}>
-                        <Text color={color.secondary} h6>ÜNVAN</Text>
-                        <Input value={ getFormItem('company_official_title') } onChangeText={ (val) => handleFormInputs('company_official_title', val) } style={styles.input}/>
-                        <View style={styles.hr}/>
-                    </View>
-                    {/* <View style={styles.row}>
-                        <View>
-                            <Text h5 color={color.gradientEnd}>Firma Yetkilisi: </Text>
-                        </View>
-                    </View>
                      <View style={styles.row}>
                         <Text color={color.secondary} h6>TCKN</Text>
-                        <Input  keyboardType={'number-pad'} maxLength={11} style={styles.input}/>
+                        <Input value={ getFormItem('company_official_tckn') } onChangeText={ (val) => handleFormInputs('company_official_tckn', val) }  keyboardType={'number-pad'} maxLength={11} style={styles.input}/>
                         <View style={styles.hr}/>
                     </View>
                     <View style={styles.row}>
                         <Text color={color.secondary} h6>AD-SOYAD</Text>
-                        <Input style={styles.input}/>
+                        <Input value={ getFormItem('company_official_name') } onChangeText={ (val) => handleFormInputs('company_official_name', val) } style={styles.input}/>
                         <View style={styles.hr}/>
                     </View>
                     <View style={[styles.row, {flexDirection: 'row', alignItems: 'center', alignContent: 'center'}]}>
                         <Text color={color.secondary} h6
                               style={{padding: 10, marginBottom: 0, justifyContent: 'center'}}>+90</Text>
-                        <Input keyboardType={'number-pad'} maxLength={10} textColor={textColor}
+                        <Input value={ getFormItem('company_official_phone') } onChangeText={ (val) => handleFormInputs('company_official_phone', val) } keyboardType={'number-pad'} maxLength={10} textColor={textColor}
                                style={[styles.input, {
                                    width: '80%',
                                    fontSize: 16,
@@ -179,14 +169,14 @@ const FirmSettingsScreen = ({ route }) => {
                     </View>
                     <View style={styles.row}>
                         <Text color={color.secondary} h6>E POSTA</Text>
-                        <Input keyboardType={'email-address'} style={styles.input}/>
+                        <Input value={ getFormItem('company_official_email') } onChangeText={ (val) => handleFormInputs('company_official_email', val) } keyboardType={'email-address'} style={styles.input}/>
                         <View style={styles.hr}/>
                     </View>
                     <View style={styles.row}>
                         <Text color={color.secondary} h6>ÜNVAN</Text>
-                        <Input style={styles.input}/>
+                        <Input value={ getFormItem('company_official_title') } onChangeText={ (val) => handleFormInputs('company_official_title', val) } style={styles.input}/>
                         <View style={styles.hr}/>
-                    </View> */}
+                    </View>
                     <View style={styles.row}>
                         <Button variant={'primary'} color={color.white} title={'Gönder'}
                             onPress={ fromLogin ? companyRegister : updateCompanyDetail  }/>
