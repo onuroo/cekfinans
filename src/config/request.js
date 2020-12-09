@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import configApi from './index';
-import {navigate} from './navigator';
+import {navigate, navigateReset, navigationRef} from './navigator';
 
 const request = axios.create({
   baseURL: configApi.API_ENDPOINT,
@@ -10,7 +10,6 @@ const request = axios.create({
 request.interceptors.request.use(
   async (config) => {
     const userInfo = await AsyncStorage.getItem('userInfo');
-    console.log('userInfo', userInfo);
     let token = null;
     if (userInfo) {
       token = JSON.stringify(userInfo).token;
@@ -40,23 +39,16 @@ request.interceptors.response.use(
       return Promise.reject(response.data);
     } else return response.data;
   },
-  async function (error) {
+    function (error) {
+
     if (error.response) {
       // The request was made and the server responded with a status code
       // that falls out of the range of 2xx
 
       if (error.response.status == 404 || error.response.status == 422) {
-        let text = 'Bir hata olustu';
-        if (error.response?.data?.errors != undefined) {
-          text = error.response?.data?.errors;
-        } else if (error.response.data.message) {
-          text = error.response.data.message;
-        }
-
-        /* navigationRef.current.goBack();*/
+          navigate('splash');
       }
       if (error.response.status == 401) {
-
         navigate('Loading', {error: error.response.status});
       }
       return Promise.reject(error.response.data);
@@ -71,7 +63,5 @@ request.interceptors.response.use(
     }
   },
 );
-
-// request.defaults.headers['Content-Type'] = 'application/json;charset=utf-8';
 
 export default request;

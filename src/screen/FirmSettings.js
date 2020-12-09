@@ -10,8 +10,7 @@ import NavigationActions from '../navigation/navigationActions';
 import FirmHooks from '../hooks/firm.hooks';
 
 const FirmSettingsScreen = ({ route }) => {
-    console.log('route', route)
-    const { fromLogin } = route.params;
+    const fromLogin = route.params?.fromLogin;
     let textColor = color.gradientEnd2;
 
     const {
@@ -34,8 +33,8 @@ const FirmSettingsScreen = ({ route }) => {
         getCompanyDetail();
         getCities();
         AsyncStorage.getItem('userInfo').then((resp) => {
-            if (userInfo) {
-                handleFormInputs('token', JSON.parse(userInfo).token)
+            if (resp) {
+                handleFormInputs('token', JSON.parse(resp).token)
             }
         });
 

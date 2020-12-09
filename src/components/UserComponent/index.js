@@ -14,13 +14,13 @@ const UserComponent = () => {
     useEffect(()=> {
         let getUserInfo=async ()=> {
             let userInfo = await AsyncStorage.getItem('userInfo');
-            await request.post('company/detail',{token:JSON.parse(userInfo).token}).then(res => setUserInfo(res.company[0]))
+            await request.post('company/detail',{token:JSON.parse(userInfo).token}).then(res => {
+                setUserInfo(res.company[0])
+                setSelected(`${res.company[0].company_image}`)
+            })
         }
         getUserInfo()
     },[])
-    useEffect(()=> {
-        setSelected(`${userInfo.company_image}`)
-    },[userInfo])
     let upload = async (data) => {
         openLoading()
         let token = await AsyncStorage.getItem('userInfo');
@@ -68,7 +68,7 @@ const UserComponent = () => {
     return (
         <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
             <View>
-                {selected ?
+                {selected && selected !== undefined ?
                     <View style={{
                         width: 150,
                         height: 150,

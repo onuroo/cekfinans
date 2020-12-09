@@ -9,14 +9,14 @@ import AuthRequests from '../requests/auth.requests';
 import NavigationActions from '../navigation/navigationActions';
 
 const RegisterHooks = () => {
-  const [namesurname, setNamesurname] = useState('As Firin Makine');
-  const [tckn, setTckn] = useState('12345678912');
-  const [phone, setPhone] = useState('5556667788');
-  const [email, setEmail] = useState('info@asfirinmakine.com');
-  const [password, setPassword] = useState('2020asfirinmakine');
-  const [passwordAgain, setPasswordAgain] = useState('2020asfirinmakine');
-  const [checkKvkk, setCheckKVkk] = useState('2020asfirinmakine');
-  const [checkTerm, setCheckTerm] = useState('2020asfirinmakine');
+  const [namesurname, setNamesurname] = useState('');
+  const [tckn, setTckn] = useState('');
+  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordAgain, setPasswordAgain] = useState('');
+  const [checkKvkk, setCheckKVkk] = useState(false);
+  const [checkTerm, setCheckTerm] = useState(false);
 
   const { navigatePush, openLoading, closeLoading, navigatePop } = NavigationActions();
   

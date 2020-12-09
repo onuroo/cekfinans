@@ -7,8 +7,8 @@ import AuthRequests from '../requests/auth.requests';
 import NavigationActions from '../navigation/navigationActions';
 
 const LoginHooks = () => {
-  const [tckn, setTckn] = useState('34343193976');
-  const [password, setPassword] = useState('2020asfirinmakine');
+  const [tckn, setTckn] = useState('');
+  const [password, setPassword] = useState('');
 
   const { navigatePush, openLoading, closeLoading, navigatePop, navigateReset } = NavigationActions();
   
