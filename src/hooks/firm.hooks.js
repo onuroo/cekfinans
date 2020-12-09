@@ -286,7 +286,7 @@ const FirmHooks = () => {
       FirmRequests.updateCompanyDetail(form).then((response) => {
         const { message } = response;
         closeLoading();
-        navigatePush('successModal', { message });
+          navigateReset('home');
         console.log('updateCompanyDetail response', response);
       }).catch((error) => {
         closeLoading();

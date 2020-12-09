@@ -9,14 +9,14 @@ import NavigationActions from '../../navigation/navigationActions'
 import {CDN} from '../../config'
 const UserComponent = () => {
     let {openLoading, closeLoading, navigatePush} = NavigationActions()
-    let [userInfo,setUserInfo] = useState({})
+    let [userInfos,setUserInfo] = useState({})
     let [selected, setSelected] = useState(null);
     useEffect(()=> {
         let getUserInfo=async ()=> {
             let userInfo = await AsyncStorage.getItem('userInfo');
             await request.post('company/detail',{token:JSON.parse(userInfo).token}).then(res => {
-                setUserInfo(res.company[0])
-                setSelected(`${res.company[0].company_image}`)
+                setUserInfo(res.company)
+                setSelected(`${res.company.company_image}`)
             })
         }
         getUserInfo()
@@ -104,7 +104,7 @@ const UserComponent = () => {
 
             <View>
                 <Text h5 color={color.white}>
-                    {userInfo.company_official_name}
+                    {userInfos?.company_official_name}
                 </Text>
             </View>
         </View>
