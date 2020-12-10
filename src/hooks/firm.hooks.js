@@ -89,16 +89,20 @@ const FirmHooks = () => {
   }
 
   const setSelectedCity = (val) => {
+    console.log('val', val);
     setForm({ ...form, company_address_city: val, company_address_district: null, company_address_neighborhood: null})
     setDistricts([]);
     setNeighborhoods([]);
-    getDistrict(val);
+    console.log('44444 cities', cities);
+    console.log('44444 find', cities.find(item => item.title = val));
+    console.log('44444 val', val);
+    getDistrict(cities.find(item => item.title = val));
   }
 
   const setSelectedDistrict = (val) => {
     setForm({ ...form, company_address_district: val, company_address_neighborhood: null})
     setNeighborhoods([]);
-    getNeighborhood(val)
+    getNeighborhood(districts.find(item => item.title = val));
   }
 
   const setSelectedNeighborhood = (val) => {
@@ -260,13 +264,14 @@ const FirmHooks = () => {
             Object.keys(object).forEach((key) => {
               console.log('company[key]', object[key], key);
               if (object[key]) {
-                if (key === 'company_address_city' ||
-                  key === 'company_address_district' ||
-                  key === 'company_address_neighborhood') {
-                    form_object[key] = JSON.parse(object[key]);
-                  } else {
-                    form_object[key] = object[key].toString();
-                  }
+                form_object[key] = object[key].toString();
+                // if (key === 'company_address_city' ||
+                //   key === 'company_address_district' ||
+                //   key === 'company_address_neighborhood') {
+                //     form_object[key] = JSON.parse(object[key]);
+                //   } else {
+                    
+                //   }
               } else form_object[key] = null;
             })
             console.log('form_object', form_object);

@@ -101,7 +101,7 @@ const FirmSettingsScreen = ({ route }) => {
                               setSelected={setSelectedCity}
                               type={'city'}
                               placeholder={'Şehir Seç'}
-                              data={cities}
+                              data={cities.map(item => item.title)}
                             />
                         </View>
                         <View style={styles.row}>
@@ -110,7 +110,7 @@ const FirmSettingsScreen = ({ route }) => {
                               setSelected={setSelectedDistrict}
                               type={'district'}
                               placeholder={'İlçe Seç'}
-                              data={districts}
+                              data={districts.map(item => item.title)}
                             />
                         </View>
                         <View style={styles.row}>
@@ -119,7 +119,7 @@ const FirmSettingsScreen = ({ route }) => {
                               setSelected={setSelectedNeighborhood}
                               type={'neighborhood'}
                               placeholder={'Mahalle Seç'}
-                              data={neighborhoods}
+                              data={neighborhoods.map(item => item.title)}
                             />
                         </View>
                     </View>

@@ -6,11 +6,12 @@ import {color} from "../ThemeConfig";
 const Selected = ({placeholder, selected, setSelected, style, type, data}) => {
     let [visible, setVisible] = useState(false);
     let [searchText, setSearch] = useState('');
-    let select = selected ? selected : {id: 0, title: `${placeholder}`};
+    console.log('selectedselected', selected);
+    let select = selected ? selected : placeholder;
     return (
         <View styles={styles.container}>
             <TouchableOpacity style={[styles.text, style && style]} onPress={() => setVisible(!visible)}>
-                <Text color={color.gradientEnd} h6>{select.title ? select.title : placeholder}</Text>
+                <Text color={color.gradientEnd} h6>{select ? select : placeholder}</Text>
                 <Icon
                     name={'chevron-down'}
                     size={22}
@@ -91,12 +92,12 @@ const RenderItem = ({data, searchText,select,setSelected}) => {
     }
     return (
         <ScrollView>
-            {data.filter(item => item.title.toLowerCase().includes(searchText.toLowerCase())).map(item => {
+            {data.filter(item => item.toLowerCase().includes(searchText.toLowerCase())).map(item => {
                 return (
                     <TouchableOpacity onPress={() => {
                         setSelected(item)
                     }} style={styles.listItem} key={item.id}>
-                        <Text medium color={color.primary} h6>{item.title}</Text>
+                        <Text medium color={color.primary} h6>{item}</Text>
                         {select.id !== 0 && select.id === item.id && (
                             <Icon color={color.primary} name={'check'} size={20}/>
                         )}
