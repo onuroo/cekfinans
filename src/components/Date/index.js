@@ -1,7 +1,7 @@
 import React, {useState,useEffect} from 'react';
-import {View, TouchableOpacity} from 'react-native';
+import {View, Modal,TouchableOpacity} from 'react-native';
 import {Calendar} from 'react-native-calendars';
-import {Button, Icon, Input, Modal, Text} from '../index';
+import {Button, Icon, Input, Text} from '../index';
 import {LocaleConfig} from 'react-native-calendars';
 import {color} from '../ThemeConfig';
 import moment from 'moment';

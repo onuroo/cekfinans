@@ -6,9 +6,10 @@ import {
     ScrollView,
     KeyboardAvoidingView,
     Keyboard,
+    Modal,
     TouchableWithoutFeedback
 } from 'react-native'
-import {Text, Header, Modal, CheckBox, Icon, Button, Logo, Input} from './../../components'
+import {Text, CheckBox, Icon, Button, Logo, Input} from './../../components'
 import {color, fontSize} from "../../components/ThemeConfig";
 import LinearGradient from 'react-native-linear-gradient';
 import request from "../../config/request";
@@ -115,7 +116,8 @@ const Register = forwardRef((props, ref) => {
                                 sözleşmesini okudum.</Text>
                         </TouchableOpacity>
                     </View>
-                    <Modal visible={kvkkModal} ratio={0.5} setVisible={setKvkkModal}>
+                    <Modal visible={kvkkModal} setVisible={setKvkkModal}>
+
                         <View style={{
                             flexDirection: 'row',
                             alignItems: 'center',
@@ -129,14 +131,19 @@ const Register = forwardRef((props, ref) => {
                                 <Icon name={'x'} color={color.danger} size={25}/>
                             </TouchableOpacity>
                         </View>
-                        <ScrollView>
+                        <ScrollView contentContainerStyle={{padding:10,paddingBottom:50}}>
                             <HTMLView value={kvkk}/>
+                            <View style={{marginVertical:20}}>
+
                             <Button color={color.white} variant={'primary'} title={'Onayla'}
                                     onPress={() => {
                                         setKvkkModal(false)
                                         setCheckKVkk(true)
                                     }}/>
+                            </View>
+
                         </ScrollView>
+
                     </Modal>
 
                     <View style={{flexDirection: 'row', marginBottom: 10}}>
@@ -162,13 +169,15 @@ const Register = forwardRef((props, ref) => {
                                 <Icon name={'x'} color={color.danger} size={25}/>
                             </TouchableOpacity>
                         </View>
-                        <ScrollView>
+                        <ScrollView contentContainerStyle={{padding:10,paddingBottom:50}}>
                             <HTMLView value={contract}/>
+                            <View style={{marginVertical:20}}>
                             <Button color={color.white} variant={'primary'} title={'Onayla'}
                                     onPress={() => {
                                         setContractModal(false)
                                         setCheckTerm(true)
                                     }}/>
+                            </View>
                         </ScrollView>
 
                     </Modal>

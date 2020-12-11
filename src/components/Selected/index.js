@@ -96,9 +96,9 @@ const RenderItem = ({data, searchText,select,setSelected}) => {
                 return (
                     <TouchableOpacity onPress={() => {
                         setSelected(item)
-                    }} style={styles.listItem} key={item.id}>
+                    }} style={styles.listItem} key={item}>
                         <Text medium color={color.primary} h6>{item}</Text>
-                        {select.id !== 0 && select.id === item.id && (
+                        {select.id !== 0 && select === item && (
                             <Icon color={color.primary} name={'check'} size={20}/>
                         )}
                     </TouchableOpacity>

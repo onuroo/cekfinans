@@ -40,21 +40,21 @@ const CheckForm = ({route}) => {
             <View style={{
                 padding: 20,
             }}>
-                <Input value={ftVKN} maxLength={11} onChangeText={(text) => setftVKN(text)} keybordType={"numeric"}
+                <Input keyboardType={'number-pad'} value={ftVKN} maxLength={11} onChangeText={(text) => setftVKN(text)}
                        placeholder={'FATURA BORÇLUSU VKN'}/>
-                <Input value={ftPrice} onChangeText={(text) => setftPrice(text)} keybordType={"numeric"}
+                <Input keyboardType={'number-pad'} value={ftPrice} onChangeText={(text) => setftPrice(text)}
                        placeholder={'FATURA TUTARI'}/>
                 <Input value={ftKonu} onChangeText={(text) => setFtKonu(text)}
                        placeholder={'Faturaya konu olan ticaretin içeriğini yazınız.'}/>
-                <Input value={cekPrice} onChangeText={(text) => setCekPrice(text)} keybordType={"numeric"}
+                <Input value={cekPrice} onChangeText={(text) => setCekPrice(text)}
                        placeholder={'ÇEK MİKTARI'}/>
-                <Input value={cekVKN} maxLength={11} onChangeText={(text) => setCekVKN(text)} keybordType={"numeric"}
+                <Input keyboardType={'number-pad'} value={cekVKN} maxLength={11} onChangeText={(text) => setCekVKN(text)}
                        placeholder={'ÇEK VKN'}/>
                 <Date setSelected={setCekDate} selected={cekDate} label={'ÇEK TARİHİ'}/>
                 <Selected style={{backgroundColor: color.gray}} setSelected={setPriceType}
                           placeholder={"ÇEK PARA BİRİMİ"} selected={priceType}
-                          data={[{title: 'TL', id: 1}]}/>
-                <Input value={cekNumber} maxLength={12} onChangeText={(text) => setCekNumber(text)}
+                          data={['TL']}/>
+                <Input keyboardType={'number-pad'} value={cekNumber} maxLength={12} onChangeText={(text) => setCekNumber(text)}
                        placeholder={'ÇEK NUMARASI'}/>
                 <Button onPress={() => onGoCheck()} variant={'primary'} title={'Devam'} color={color.white}/>
             </View>

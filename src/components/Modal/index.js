@@ -36,10 +36,9 @@ const ModalSelect = ({visible, children, setVisible, ratio}) => {
     return heightFull * getRatio;
   };
   return (
-    <View>
+    <View  style={styles.container}>
       <Modal transparent onShow={onShow} visible={visible}>
         <View
-          style={styles.container}
           onLayout={(event) => {
             let {height: heightFull} = event.nativeEvent.layout;
             setHeight(getHeightView(heightFull, ratio));

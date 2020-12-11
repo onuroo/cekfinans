@@ -14,7 +14,6 @@ const FirmSettingsScreen = ({ route }) => {
     let textColor = color.gradientEnd2;
 
     const {
-        isUpdate,
         handleFormInputs,
         getFormItem,
         getCities,
@@ -130,12 +129,12 @@ const FirmSettingsScreen = ({ route }) => {
                     </View>
                     <View style={styles.row}>
                         <Text color={color.secondary} h6>KAPI NO</Text>
-                        <Input value={ getFormItem('company_address_door_no') } onChangeText={ (val) => handleFormInputs('company_address_door_no', val) } style={styles.input}/>
+                        <Input keyboardType={'number-pad'} value={ getFormItem('company_address_door_no') } onChangeText={ (val) => handleFormInputs('company_address_door_no', val) } style={styles.input}/>
                         <View style={styles.hr}/>
                     </View>
                     <View style={styles.row}>
                         <Text color={color.secondary} h6>DAİRE NO</Text>
-                        <Input value={ getFormItem('company_address_apartment_no') } onChangeText={ (val) => handleFormInputs('company_address_apartment_no', val) } style={styles.input}/>
+                        <Input keyboardType={'number-pad'} value={ getFormItem('company_address_apartment_no') } onChangeText={ (val) => handleFormInputs('company_address_apartment_no', val) } style={styles.input}/>
                         <View style={styles.hr}/>
                     </View>
                     <View style={styles.row}>
