@@ -150,7 +150,7 @@ const App = () => {
     if (!state.isReady) return null;
 
     let initialRouteName = null;
-    if (state.token) initialRouteName = 'forgot';
+    if (state.token) initialRouteName = 'home';
     else initialRouteName = 'login';
     if (!state.companyInfo && state.token) initialRouteName = 'firmSettings';
 
