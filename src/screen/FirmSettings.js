@@ -82,12 +82,12 @@ const FirmSettingsScreen = ({ route }) => {
                     </View>
                     <View style={styles.row}>
                         <Text color={color.secondary} h6>E POSTA ADRESİ</Text>
-                        <Input value={ getFormItem("email") } onChangeText={ (val) => handleFormInputs('email', val) } keyboardType={'email-address'} style={styles.input}/>
+                        <Input autoCapitalize="none" value={ getFormItem("email") } onChangeText={ (val) => handleFormInputs('email', val) } keyboardType={'email-address'} style={styles.input}/>
                         <View style={styles.hr}/>
                     </View>
                     <View style={styles.row}>
                         <Text color={color.secondary} h6>WEBSİTE</Text>
-                        <Input value={ getFormItem("company_website") } onChangeText={ (val) => handleFormInputs('company_website', val) } style={styles.input}/>
+                        <Input autoCapitalize="none" value={ getFormItem("company_website") } onChangeText={ (val) => handleFormInputs('company_website', val) } style={styles.input}/>
                         <View style={styles.hr}/>
                     </View>
                     <View style={styles.row}>

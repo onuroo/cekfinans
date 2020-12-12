@@ -77,12 +77,14 @@ const FirmHooks = () => {
   }
 
   const getDistrict = async (val) => {
+    console.log('getDistrict val', val);
     await request.post('common/district',{ id: val.id }).then(res => {
         setDistricts(res.district)
     })
   }
 
   const getNeighborhood = async (val) => {
+    console.log('getNeighborhood val', val);
     await request.post('common/neighborhood',{ id: val.id }).then(res => {
         setNeighborhoods(res.neighborhood)
     })
@@ -94,15 +96,15 @@ const FirmHooks = () => {
     setDistricts([]);
     setNeighborhoods([]);
     console.log('44444 cities', cities);
-    console.log('44444 find', cities.find(item => item.title = val));
+    console.log('44444 find', cities.find(item => item.title === val));
     console.log('44444 val', val);
-    getDistrict(cities.find(item => item.title = val));
+    getDistrict(cities.find(item => item.title === val));
   }
 
   const setSelectedDistrict = (val) => {
     setForm({ ...form, company_address_district: val, company_address_neighborhood: null})
     setNeighborhoods([]);
-    getNeighborhood(districts.find(item => item.title = val));
+    getNeighborhood(districts.find(item => item.title === val));
   }
 
   const setSelectedNeighborhood = (val) => {
