@@ -29,6 +29,10 @@ const NavigationActions = () => {
     );
   };
 
+  const navigatePoptoTop = (routeName, params = {}) => {
+    navigation.reset();
+  };
+
   const openLoading = () => {
     navigatePush('loading');
   }
@@ -43,7 +47,8 @@ const NavigationActions = () => {
     navigatePop,
     navigateReset,
     openLoading,
-    closeLoading
+    closeLoading,
+    navigatePoptoTop
   };
 };
 

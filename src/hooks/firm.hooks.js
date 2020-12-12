@@ -189,7 +189,7 @@ const FirmHooks = () => {
     if (!company_title) return 'Firma ünvanı bilgisi boş bırakılamaz!';
     if (!company_tax_office) return 'Vergi dairesi bilgisi boş bırakılamaz!';
     if (!company_phone) return 'Telefon bilgisi boş bırakılamaz!';
-    if (!(company_phone && company_phone.length > 9)) return 'Telefon bilgisi 10 hane olmamalı!';
+    if (!(company_phone && company_phone.length > 9)) return 'Telefon bilgisi 10 hane olmalı!';
     if (!email) return 'E-posta adresi bilgisi boş bırakılamaz!';
     if (email && !emailValidation(email)) return 'E-posta adresi bilgisi uygun değil!';
     if (!company_website) return 'Website bilgisi boş bırakılamaz!';

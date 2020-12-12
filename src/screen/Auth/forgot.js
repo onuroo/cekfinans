@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Text, Input, Button, Logo, Header, GoBack} from '../../components';
 import {color} from "../../components/ThemeConfig";
 import LinearGradient from "react-native-linear-gradient";
+import { ForgotPasswordContext } from '../../context/ForgotPasswordContext';
+import ForgotPasswordHooks from '../../hooks/forgotPassword.hooks';
 
 const ForgotScreen = ({navigation}) => {
+	const { resetTckn, setResetTckn, onSubmitPasswordReset } = ForgotPasswordHooks();
+	console.log('2222 resetTckn', resetTckn);
+	console.log('2222 setResetTckn', setResetTckn);
 	return (
 		<View style={styles.container}>
 			<Header left={<GoBack navigation={navigation}/>} center={<Logo/>}/>
@@ -22,7 +27,8 @@ const ForgotScreen = ({navigation}) => {
 						</Text>
 					</View>
 					<View style={{flex: 0.5, justifyContent:'space-between', paddingVertical: 50}}>
-						<Input onChangeText={(val) => console.log(val)}
+						<Input onChangeText={(val) => setResetTckn(val)}
+							   value={ resetTckn }
 						       autoCapitalize={'none'}
 						       autoCompleteType={'off'}
 						       keyboardType={'numeric'}
@@ -31,7 +37,7 @@ const ForgotScreen = ({navigation}) => {
 						/>
 						<View style={{alignItems: 'center'}}>
 							<View style={{width: 200, alignContent: 'center', justifyContent: 'center'}}>
-								<Button color={color.white} variant={'primary'} onPress={() => console.log('asasd')}
+								<Button color={color.white} variant={'primary'} onPress={() => onSubmitPasswordReset()}
 								        title={'GÖNDER'}/>
 							</View>
 						</View>

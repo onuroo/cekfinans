@@ -24,6 +24,8 @@ const Tab = createBottomTabNavigator();
 import LoginScreen from './screen/Auth/login';
 import RegisterScreen from './screen/Auth/register';
 import ForgotScreen from './screen/Auth/forgot';
+import ForgotCodeVerifyScreen from './screen/Auth/forgotCodeVerify';
+import PasswordConfirmScreen from './screen/Auth/passwordConfirm';
 import HomeScreen from './screen/Home';
 import SettingsScreen from './screen/Settings';
 import CheckScreen from './screen/Check';
@@ -43,7 +45,9 @@ import ErrorModal from "./components/ErrorModal";
 import ErrorQrCode from "./components/ErrorQrCodeModal";
 import SuccessModal from "./components/SuccessModal";
 import LoadingModal from "./components/LoadingModal";
+import SuccessPasswordChangeModal from "./components/SuccessPasswordChangeModal";
 import AppStateProvider from "./context/CheckContext";
+import ForgotPasswordProvider from "./context/ForgotPasswordContext";
 import AddInvoice from './components/AddInvoice'
 import NotificationScreen from './screen/NotificationScreen'
 import {useWindowDimensions} from 'react-native';
@@ -158,28 +162,33 @@ const App = () => {
         <ThemeProvider>
             <NavigationContainer>
                 <AppStateProvider>
-                    <Stack.Navigator initialRouteName={ initialRouteName }
-                                        headerMode="none">
-                         <Stack.Screen name="splash" component={SplashScreen}/>
-                         <Stack.Screen name="login" component={LoginScreen}/>
-                         <Stack.Screen name="register" component={RegisterScreen}/>
-                         <Stack.Screen name="forgot" component={ForgotScreen}/>
-                         <Stack.Screen name="home" component={DrawerScreens}/>
-                         <Stack.Screen name="checkAdd" component={CheckAddScreen}/>
-                         <Stack.Screen name="checkForm" component={CheckForm}/>
-                         <Stack.Screen name="list" component={ListScreen}/>
-                         <Stack.Screen name="listDetail" component={ListDetailScreen}/>
-                         <Stack.Screen name="firmSettings" component={FirmSettingsScreen}/>
-                         <Stack.Screen name="errorModal" component={ErrorModal} options={{...ModalTransition}}/>
-                         <Stack.Screen name="errorQrCode" component={ErrorQrCode} options={{...ModalTransition}}/>
-                         <Stack.Screen name="successModal" component={SuccessModal} options={{...ModalTransition}}/>
-                         <Stack.Screen name="addInvoice" component={AddInvoice} options={{...ModalTransition}}/>
-                         <Stack.Screen name="addInvoiceForm" component={AddInvoiceForm}/>
-                         <Stack.Screen name="loading" component={LoadingModal} options={{...ModalTransition}}/>
-                         <Stack.Screen name="codeVerify" component={CodeVerify}/>
-                         <Stack.Screen name="PasswordChange" component={PasswordChangeScreen}/>
-                         <Stack.Screen name="Notifications" component={NotificationScreen}/>
-                    </Stack.Navigator>
+                    <ForgotPasswordProvider>
+                        <Stack.Navigator initialRouteName={ initialRouteName }
+                                            headerMode="none">
+                            <Stack.Screen name="splash" component={SplashScreen}/>
+                            <Stack.Screen name="login" component={LoginScreen}/>
+                            <Stack.Screen name="register" component={RegisterScreen}/>
+                            <Stack.Screen name="forgot" component={ForgotScreen}/>
+                            <Stack.Screen name="forgotCodeVerify" component={ForgotCodeVerifyScreen}/>
+                            <Stack.Screen name="passwordConfirm" component={PasswordConfirmScreen}/>
+                            <Stack.Screen name="home" component={DrawerScreens}/>
+                            <Stack.Screen name="checkAdd" component={CheckAddScreen}/>
+                            <Stack.Screen name="checkForm" component={CheckForm}/>
+                            <Stack.Screen name="list" component={ListScreen}/>
+                            <Stack.Screen name="listDetail" component={ListDetailScreen}/>
+                            <Stack.Screen name="firmSettings" component={FirmSettingsScreen}/>
+                            <Stack.Screen name="errorModal" component={ErrorModal} options={{...ModalTransition}}/>
+                            <Stack.Screen name="errorQrCode" component={ErrorQrCode} options={{...ModalTransition}}/>
+                            <Stack.Screen name="successModal" component={SuccessModal} options={{...ModalTransition}}/>
+                            <Stack.Screen name="addInvoice" component={AddInvoice} options={{...ModalTransition}}/>
+                            <Stack.Screen name="addInvoiceForm" component={AddInvoiceForm}/>
+                            <Stack.Screen name="loading" component={LoadingModal} options={{...ModalTransition}}/>
+                            <Stack.Screen name="successPasswordChangeModal" component={SuccessPasswordChangeModal} options={{...ModalTransition}}/>
+                            <Stack.Screen name="codeVerify" component={CodeVerify}/>
+                            <Stack.Screen name="PasswordChange" component={PasswordChangeScreen}/>
+                            <Stack.Screen name="Notifications" component={NotificationScreen}/>
+                        </Stack.Navigator>
+                    </ForgotPasswordProvider>
                 </AppStateProvider>
             </NavigationContainer>
         </ThemeProvider>

@@ -39,6 +39,37 @@ class AuthRequests {
   
     });
   }
+
+  passwordReset(postBody) {
+      return new Promise((resolve, reject) => {
+        request.post('user/resetPassword', postBody).then((response) => {
+            resolve(response);
+        }).catch((error) => {
+            reject(error);
+        });
+  
+    });
+  }
+  codeConfirm(postBody) {
+      return new Promise((resolve, reject) => {
+        request.post('user/codeConfirm', postBody).then((response) => {
+            resolve(response);
+        }).catch((error) => {
+            reject(error);
+        });
+  
+    });
+  }
+  passwordConfirm(postBody) {
+      return new Promise((resolve, reject) => {
+        request.post('user/passwordConfirm', postBody).then((response) => {
+            resolve(response);
+        }).catch((error) => {
+            reject(error);
+        });
+  
+    });
+  }
 }
 
 const authRequests = new AuthRequests();
