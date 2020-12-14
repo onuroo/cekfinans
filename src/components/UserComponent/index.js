@@ -6,7 +6,6 @@ import ImagePicker from "react-native-image-picker";
 import request from "../../config/request";
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import NavigationActions from '../../navigation/navigationActions'
-import {CDN} from '../../config'
 const UserComponent = () => {
     let {openLoading, closeLoading, navigatePush} = NavigationActions()
     let [userInfos,setUserInfo] = useState({})
@@ -16,7 +15,7 @@ const UserComponent = () => {
             let userInfo = await AsyncStorage.getItem('userInfo');
             await request.post('company/detail',{token:JSON.parse(userInfo).token}).then(res => {
                 setUserInfo(res.company)
-                setSelected(`${res.company.company_image}`)
+                setSelected(res.company.company_image)
             })
         }
         getUserInfo()

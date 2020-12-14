@@ -8,7 +8,7 @@ import NavigationActions from '../../navigation/navigationActions';
 const CheckForm = ({route}) => {
     let {openLoading, navigatePush, navigateReset, closeLoading} = NavigationActions();
     const {
-        setAddInvoiceModal, error, onSend, setPriceType, priceType,
+        onSend, setPriceType, priceType,
         setCekDate, cekDate,
         setCekNumber, cekNumber,
         setCekPrice, cekPrice,
